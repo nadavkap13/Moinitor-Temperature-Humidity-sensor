@@ -1,0 +1,3 @@
+../Core/Src/mymain.cpp:12:5:int _write(int, char*, int)	24	static
+../Core/Src/mymain.cpp:17:6:void mymaininit()	4	static
+../Core/Src/mymain.cpp:22:6:void mainloop()	4	static
