@@ -1,3 +1,7 @@
-../Core/Src/mymain.cpp:12:5:int _write(int, char*, int)	24	static
-../Core/Src/mymain.cpp:17:6:void mymaininit()	4	static
-../Core/Src/mymain.cpp:22:6:void mainloop()	4	static
+../Core/Src/mymain.cpp:13:5:int _write(int, char*, int)	24	static
+../Core/Src/mymain.cpp:17:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
+../Core/Src/mymain.cpp:21:6:void mycallback()	4	static
+../Core/Src/mymain.cpp:25:6:void mymaininit()	8	static
+../Core/Src/mymain.cpp:35:6:void myloop()	8	static
+../Core/Src/mymain.cpp:146:2:void __static_initialization_and_destruction_0(int, int)	16	static
+../Core/Src/mymain.cpp:146:2:cpp)	8	static

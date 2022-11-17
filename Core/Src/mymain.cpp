@@ -1,25 +1,146 @@
-#include "mymain.h"
-#include "main.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include "mymain.h"
+#include "main.h"
+#include "mybuzzer.h"
+#include <DHT.h>
 
-
-
+DHT dht = DHT(GPIOB,pin_4_Pin);
+uint8_t DHT_data[5];
 int alarm_on = 0;
 
 int _write(int fd, char *ptr, int len) {
 	HAL_UART_Transmit(&huart2, (uint8_t*) ptr, len, HAL_MAX_DELAY);
 	return len;
 }
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	dht.Dht_onGpioInterrupt(pin_4_Pin);
+}
+void mycallback(){
+
+}
 
 void mymaininit()
 {
+	HAL_NVIC_EnableIRQ(TIM6_IRQn);
+	HAL_TIM_Base_Start_IT(&htim3);
+	HAL_TIM_Base_Start_IT(&htim6);
+	HAL_TIM_Base_Start_IT(&htim1);
+	dht.Dht_readAsync();
 
 }
 
-void mainloop()
+void myloop()
 {
-
+	if(dht.Dht_hasData()){
+			 printf("temp is : %d\n\r humid is : %d\r\n", DHT_data[2],DHT_data[0]);
+		}
 }
+
+int song[] = {
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_5,NOTE_1,NOTE_3,NOTE_4,
+		NOTE_3,NOTE_3,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_4,NOTE_5,
+		NOTE_1,NOTE_3,NOTE_4,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_4,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_4,
+		NOTE_4,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_7,NOTE_7,
+		NOTE_1,NOTE_1,
+		NOTE_2,NOTE_4,NOTE_7,
+		NOTE_1,NOTE_3,NOTE_4,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_2,NOTE_2,
+		NOTE_4,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_4,
+		NOTE_4,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_4,
+		NOTE_1,NOTE_1,
+		NOTE_3,NOTE_2,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_1,NOTE_1,
+		NOTE_7,NOTE_7,
+		NOTE_1,NOTE_1,
+		NOTE_2,NOTE_4,NOTE_7,
+		0
+	};
+int length[]={
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_1,FRAME_1,FRAME_2,FRAME_2,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_2,FRAME_2,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_2,FRAME_2,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_0,FRAME_1,
+		FRAME_2,FRAME_2,FRAME_0,
+		0
+
+};

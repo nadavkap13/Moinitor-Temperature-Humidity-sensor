@@ -3,11 +3,7 @@
 
 #include "main.h"
 
-typedef struct Rtc_
-{
-	I2C_HandleTypeDef * hi2c;
-	uint8_t devAddr;
-} Rtc;
+
 
 typedef struct DateTime_
 {
@@ -27,7 +23,7 @@ private :
 	DateTime * dateTime;
 public:
 
-	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr);
+	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr,DateTime * datetime);
 
 	//void rtcWrite(Rtc * rtc, uint16_t memAddr, uint8_t * buffer, uint16_t size);
 

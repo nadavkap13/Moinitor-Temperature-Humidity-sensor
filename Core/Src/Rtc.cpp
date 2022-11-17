@@ -25,10 +25,11 @@ static const int _daysUntilMonth[] = {
 		365
 };
 
-_RTC::_RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr)
+_RTC::_RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr,DateTime * datetime)
 {
   _hi2c = hi2c;
   _devAddr = devAddr;
+  datetime = datetime;
 }
 
 void _RTC::rtcStart()
