@@ -1,7 +1,10 @@
-../Core/Src/mymain.cpp:13:5:int _write(int, char*, int)	24	static
-../Core/Src/mymain.cpp:17:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
-../Core/Src/mymain.cpp:21:6:void mycallback()	4	static
-../Core/Src/mymain.cpp:25:6:void mymaininit()	8	static
-../Core/Src/mymain.cpp:35:6:void myloop()	8	static
-../Core/Src/mymain.cpp:146:2:void __static_initialization_and_destruction_0(int, int)	16	static
-../Core/Src/mymain.cpp:146:2:cpp)	8	static
+../Core/Src/mymain.cpp:16:5:int _write(int, char*, int)	24	static
+../Core/Src/mymain.cpp:20:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
+../Core/Src/mymain.cpp:24:6:void mycallback()	4	static
+../Core/Src/mymain.cpp:28:6:void mymaininit()	8	static
+../Core/Src/mymain.cpp:37:6:void myloop()	8	static
+../Core/Src/mymain.cpp:44:6:void READ_TEMP_func(void*)	16	static
+../Core/Src/mymain.cpp:59:6:void comtask_func(void*)	16	static
+../Core/Src/mymain.cpp:72:6:void monitor_func(void*)	16	static
+../Core/Src/mymain.cpp:190:2:void __static_initialization_and_destruction_0(int, int)	16	static
+../Core/Src/mymain.cpp:190:2:cpp)	8	static

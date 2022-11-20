@@ -107,8 +107,9 @@ void _RTC::rtcGetTime()
 //	return seconds;
 //}
 
-void _RTC::rtcSetTime()
+void _RTC::rtcSetTime(DateTime * _datetime)
 {
+	dateTime = _datetime;
 	uint8_t buffer[RTC_DATE_TIME_SIZE];
 
 	buffer[0] = intToBcd(dateTime->sec, 0, 59);

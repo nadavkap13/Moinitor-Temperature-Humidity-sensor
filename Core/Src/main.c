@@ -50,12 +50,31 @@ TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart2;
 
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
+/* Definitions for READ_TEMP */
+osThreadId_t READ_TEMPHandle;
+const osThreadAttr_t READ_TEMP_attributes = {
+  .name = "READ_TEMP",
   .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for COMTASK */
+osThreadId_t COMTASKHandle;
+const osThreadAttr_t COMTASK_attributes = {
+  .name = "COMTASK",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for MONITOR_TEMP */
+osThreadId_t MONITOR_TEMPHandle;
+const osThreadAttr_t MONITOR_TEMP_attributes = {
+  .name = "MONITOR_TEMP",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for DHT_MONITOR */
+osSemaphoreId_t DHT_MONITORHandle;
+const osSemaphoreAttr_t DHT_MONITOR_attributes = {
+  .name = "DHT_MONITOR"
 };
 /* USER CODE BEGIN PV */
 
@@ -68,7 +87,9 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM1_Init(void);
-void StartDefaultTask(void *argument);
+void READ_TEMP_func(void *argument);
+void comtask_func(void *argument);
+void monitor_func(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -112,7 +133,6 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  mymaininit();
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -121,6 +141,10 @@ int main(void)
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
+
+  /* Create the semaphores(s) */
+  /* creation of DHT_MONITOR */
+  DHT_MONITORHandle = osSemaphoreNew(1, 1, &DHT_MONITOR_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -135,8 +159,14 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of READ_TEMP */
+  READ_TEMPHandle = osThreadNew(READ_TEMP_func, NULL, &READ_TEMP_attributes);
+
+  /* creation of COMTASK */
+  COMTASKHandle = osThreadNew(comtask_func, NULL, &COMTASK_attributes);
+
+  /* creation of MONITOR_TEMP */
+  MONITOR_TEMPHandle = osThreadNew(monitor_func, NULL, &MONITOR_TEMP_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -430,22 +460,60 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_READ_TEMP_func */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the READ_TEMP thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+/* USER CODE END Header_READ_TEMP_func */
+__weak void READ_TEMP_func(void *argument)
 {
   /* USER CODE BEGIN 5 */
+	  mymaininit();
+
   /* Infinite loop */
   for(;;)
   {
-	  myloop();
+
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_comtask_func */
+/**
+* @brief Function implementing the COMTASK thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_comtask_func */
+__weak void comtask_func(void *argument)
+{
+  /* USER CODE BEGIN comtask_func */
+  /* Infinite loop */
+  for(;;)
+  {
+
+  }
+  /* USER CODE END comtask_func */
+}
+
+/* USER CODE BEGIN Header_monitor_func */
+/**
+* @brief Function implementing the MONITOR_TEMP thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_monitor_func */
+__weak void monitor_func(void *argument)
+{
+  /* USER CODE BEGIN monitor_func */
+  /* Infinite loop */
+  for(;;)
+  {
+
+  }
+  /* USER CODE END monitor_func */
 }
 
 /**

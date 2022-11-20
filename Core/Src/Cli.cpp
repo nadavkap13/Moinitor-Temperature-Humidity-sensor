@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <String.h>
 #include "main.h"
 #include "Cli.h"
 #include "LED.h"
@@ -8,6 +9,7 @@
 
 extern LED ledblue;
 extern int blinkOn;
+extern _RTC rtc;
 class ledOn : public Cli{
 private:
 	LED * _led;
@@ -78,8 +80,25 @@ public:
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
+		char s[3] = ":";
+		char *token;
+		DateTime tempdate;
+			token = strtok(NULL, s);
+			tempdate.min = atoi(token);
+			token = strtok(NULL, s);
 
-		_rtc->rtcSetTime();
+			tempdate.hours = atoi(token);
+			token = strtok(NULL, s);
+
+			tempdate.day = atoi(token);
+			token = strtok(NULL, s);
+
+			tempdate.month = atoi(token);
+			token = strtok(NULL, s);
+
+			tempdate.year = atoi(token);
+			token = strtok(NULL, s);
+		_rtc->rtcSetTime(&tempdate);
 	}
 };
 class rtcstop : public Cli{
@@ -112,6 +131,7 @@ void initCLI(){
 //	RegisterCommand("ledoff",new ledOff(&ledblue));
 //	RegisterCommand("ledblink",new ledBlink(&ledblue));
 //	RegisterCommand("setdelay",new ledSetDelay(&ledblue));
+	RegisterCommand("settime",new rtcsettime(rtc))
 }
 
 

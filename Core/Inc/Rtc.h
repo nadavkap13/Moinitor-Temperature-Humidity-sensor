@@ -39,7 +39,7 @@ public:
 
 	//uint32_t rtcGetSeconds();
 
-	void rtcSetTime();
+	void rtcSetTime(DateTime * _datetime);
 };
 
 

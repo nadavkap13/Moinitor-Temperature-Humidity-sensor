@@ -29,8 +29,9 @@ public:
 				commands[j]->command->doCommand(param);
 				return;
 			}
-			printf("Invalid command\r\n");
+
 		}
+		printf("Invalid command\r\n");
 	}
 };
 int commTask();

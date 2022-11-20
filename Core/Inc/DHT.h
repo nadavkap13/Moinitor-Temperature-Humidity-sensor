@@ -18,6 +18,9 @@ private:
 	DHT_STATE dhtPin;
 	int bitcount;
 	int delay=0;
+	uint8_t dht_byte= 0;
+	uint8_t m= 0;
+	uint8_t p= 0;
 public:
 
 	 DHT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);

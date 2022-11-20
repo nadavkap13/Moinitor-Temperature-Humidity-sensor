@@ -4,14 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 
-static uint8_t dht_byte= 0;
-//static int dht_count=0;
-static uint8_t m= 0;
-static uint8_t p= 0;
+
+
 GPIO_InitTypeDef gpioStruct;
 extern uint8_t DHT_data[5];
- int delay=0;
-//extern int startdelay;
 extern TIM_HandleTypeDef htim1;
 
 DHT::DHT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
@@ -61,15 +57,17 @@ void DHT::Dht_onGpioInterrupt(uint16_t pin)
 			dhtPin=WAIT_RESPONSE_STOP;
 			break;
 		case WAIT_RESPONSE_STOP:
+			counter = __HAL_TIM_GET_COUNTER(&htim1);
 			dhtPin=RECEIVING_BITS;
 			break;
 		case RECEIVING_BITS:
 			counter = __HAL_TIM_GET_COUNTER(&htim1);
-			if(counter<=100)
-			{
+			if(counter<=100)  {
 				dht_byte&= ~(1<<(7-p));
 			}
-			else dht_byte|= (1<<(7-p));
+			else {
+				dht_byte|= (1<<(7-p));
+			}
 
 			p++;
 			bitcount++;
@@ -85,7 +83,7 @@ void DHT::Dht_onGpioInterrupt(uint16_t pin)
 				bitcount=0;
 				m=0;
 
-				dhtPin=DATA_RECEIVED;
+			dhtPin=DATA_RECEIVED;
 			}
 			break;
 		case DATA_RECEIVED:
@@ -97,7 +95,7 @@ void DHT::Dht_onGpioInterrupt(uint16_t pin)
 }
 
 int DHT::Dht_hasData(){
-	if (dhtPin==DATA_RECEIVED){
+                     	if (dhtPin==DATA_RECEIVED){
 //		startdelay=0;
 //		delay =0;
 		dhtPin=WAKING;

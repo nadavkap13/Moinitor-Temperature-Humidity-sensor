@@ -5,4 +5,4 @@
 ../Core/Src/Rtc.cpp:58:12:int bcdToInt(uint8_t)	16	static
 ../Core/Src/Rtc.cpp:63:16:uint8_t intToBcd(int, int, int)	24	static
 ../Core/Src/Rtc.cpp:72:6:void _RTC::rtcGetTime()	48	static
-../Core/Src/Rtc.cpp:110:6:void _RTC::rtcSetTime()	40	static
+../Core/Src/Rtc.cpp:110:6:void _RTC::rtcSetTime(DateTime*)	40	static
