@@ -11,6 +11,7 @@ extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart2;
 extern osSemaphoreId_t DHT_MONITORHandle;
+extern I2C_HandleTypeDef hi2c1;
 void mymaininit();
 void myloop();
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);

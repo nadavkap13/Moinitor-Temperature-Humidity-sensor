@@ -9,10 +9,9 @@
 
 #define MAX_BUFFER_LENGTH 100
 uint8_t cmdbuffer[MAX_BUFFER_LENGTH];
-CliContainer container;
 int cmdcount = 0;
 int cmdprint = 0;
-
+extern CliContainer container;
 
 
 int commTask() {
@@ -59,7 +58,8 @@ int commTask() {
 
 void handleCommand() {
 	char cmd[20];
-	char param[20];
+	char param[50];
+	sscanf((const char*) cmdbuffer, "%s %s", cmd, param);
 
 	container.doCommand(cmd,param);
 }

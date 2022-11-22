@@ -6,13 +6,11 @@
 class BUZZER{
 private:
 	TIM_HandleTypeDef *htim;
-	int *song;
-	int *frames;
 public:
-	BUZZER(TIM_HandleTypeDef *htim,int *song,int *frames);
+	BUZZER(TIM_HandleTypeDef *htim);
 	void buzzerStartPlay();
 	void buzzerStopPlay();
-	void buzzerOnInterrupt();
+	//void buzzerOnInterrupt();
 };
 
 typedef enum  _NOTES{

@@ -23,7 +23,7 @@ private :
 	DateTime * dateTime;
 public:
 
-	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr,DateTime * datetime);
+	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr);
 
 	//void rtcWrite(Rtc * rtc, uint16_t memAddr, uint8_t * buffer, uint16_t size);
 

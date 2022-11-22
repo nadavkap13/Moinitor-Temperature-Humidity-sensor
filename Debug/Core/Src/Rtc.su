@@ -1,8 +1,8 @@
-../Core/Src/Rtc.cpp:28:1:_RTC::_RTC(I2C_HandleTypeDef*, uint32_t, DateTime*)	24	static
-../Core/Src/Rtc.cpp:35:6:void _RTC::rtcStart()	40	static
-../Core/Src/Rtc.cpp:43:6:void _RTC::rtcStop()	40	static
-../Core/Src/Rtc.cpp:51:5:int _RTC::rtcIsRunning()	40	static
-../Core/Src/Rtc.cpp:58:12:int bcdToInt(uint8_t)	16	static
-../Core/Src/Rtc.cpp:63:16:uint8_t intToBcd(int, int, int)	24	static
-../Core/Src/Rtc.cpp:72:6:void _RTC::rtcGetTime()	48	static
-../Core/Src/Rtc.cpp:110:6:void _RTC::rtcSetTime(DateTime*)	40	static
+../Core/Src/Rtc.cpp:30:1:_RTC::_RTC(I2C_HandleTypeDef*, uint32_t)	24	static
+../Core/Src/Rtc.cpp:36:6:void _RTC::rtcStart()	40	static
+../Core/Src/Rtc.cpp:44:6:void _RTC::rtcStop()	40	static
+../Core/Src/Rtc.cpp:52:5:int _RTC::rtcIsRunning()	40	static
+../Core/Src/Rtc.cpp:59:12:int bcdToInt(uint8_t)	16	static
+../Core/Src/Rtc.cpp:64:16:uint8_t intToBcd(int, int, int)	24	static
+../Core/Src/Rtc.cpp:73:6:void _RTC::rtcGetTime()	64	static
+../Core/Src/Rtc.cpp:118:6:void _RTC::rtcSetTime(DateTime*)	40	static

@@ -6,10 +6,13 @@
 #include "LED.h"
 #include "Rtc.h"
 #include "comtask.h"
+#include "mybuzzer.h"
 
 extern LED ledblue;
 extern int blinkOn;
 extern _RTC rtc;
+extern CliContainer container;
+extern BUZZER buzzer;
 class ledOn : public Cli{
 private:
 	LED * _led;
@@ -18,7 +21,6 @@ public:
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		blinkOn = 0;
 		_led->Led_On();
 	}
 };
@@ -30,7 +32,6 @@ public:
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		blinkOn = 0;
 		_led->Led_Off();
 	}
 };
@@ -42,7 +43,6 @@ public:
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		blinkOn = 1;
 		_led->Led_Blink();
 	}
 };
@@ -54,7 +54,6 @@ public:
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		blinkOn = 0;
 		int _param = atoi(param);
 		_led->LED_delay(_param);
 	}
@@ -72,6 +71,19 @@ public:
 		_rtc->rtcStart();
 	}
 };
+class rtcgettime : public Cli{
+private:
+	_RTC * _rtc;
+public:
+	rtcgettime(_RTC * rtc){
+		_rtc = rtc;
+	}
+	void doCommand(const char * param) override{
+
+		_rtc->rtcGetTime();
+
+	}
+};
 class rtcsettime : public Cli{
 private:
 	_RTC * _rtc;
@@ -80,24 +92,38 @@ public:
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
+
+		char * token;
 		char s[3] = ":";
-		char *token;
+		char temp[50];
+		strcpy(temp,param);
 		DateTime tempdate;
-			token = strtok(NULL, s);
-			tempdate.min = atoi(token);
-			token = strtok(NULL, s);
 
-			tempdate.hours = atoi(token);
-			token = strtok(NULL, s);
+		token = strtok(temp, s);
+		tempdate.hours = atoi(token);
+		token = strtok(NULL, s);
 
-			tempdate.day = atoi(token);
-			token = strtok(NULL, s);
+		tempdate.min = atoi(token);
+		token = strtok(NULL, s);
 
-			tempdate.month = atoi(token);
-			token = strtok(NULL, s);
+		tempdate.sec = atoi(token);
+		token = strtok(NULL, s);
 
-			tempdate.year = atoi(token);
-			token = strtok(NULL, s);
+		tempdate.weekDay = atoi(token);
+		token = strtok(NULL, s);
+
+		tempdate.day = atoi(token);
+		token = strtok(NULL, s);
+
+		tempdate.month = atoi(token);
+		token = strtok(NULL, s);
+
+		tempdate.year = atoi(token);
+		token = strtok(NULL, s);
+
+
+
+
 		_rtc->rtcSetTime(&tempdate);
 	}
 };
@@ -113,25 +139,40 @@ public:
 		_rtc->rtcStop();
 	}
 };
-class rtcgettime : public Cli{
+class buzzeron : public Cli{
 private:
-	_RTC * _rtc;
+	BUZZER * _buzzer;
 public:
-	rtcgettime(_RTC * rtc){
-		_rtc = rtc;
+	buzzeron(BUZZER * buzzer){
+		_buzzer = buzzer;
 	}
 	void doCommand(const char * param) override{
-
-		_rtc->rtcGetTime();
+		_buzzer->buzzerStartPlay();
+	}
+};
+class buzzeroff : public Cli{
+private:
+	BUZZER * _buzzer;
+public:
+	buzzeroff(BUZZER * buzzer){
+		_buzzer = buzzer;
+	}
+	void doCommand(const char * param) override{
+		_buzzer->buzzerStopPlay();
 	}
 };
 
-void initCLI(){
-//	RegisterCommand("ledon",new ledOn(&ledblue));
-//	RegisterCommand("ledoff",new ledOff(&ledblue));
-//	RegisterCommand("ledblink",new ledBlink(&ledblue));
-//	RegisterCommand("setdelay",new ledSetDelay(&ledblue));
-	RegisterCommand("settime",new rtcsettime(rtc))
+
+void CliContainer::initCLIcontainer(){
+	container.RegisterCommand("ledon",new ledOn(&ledblue));
+	container.RegisterCommand("ledoff",new ledOff(&ledblue));
+	container.RegisterCommand("ledblink",new ledBlink(&ledblue));
+	container.RegisterCommand("settime",new rtcsettime(&rtc));
+	container.RegisterCommand("gettime",new rtcgettime(&rtc));
+	container.RegisterCommand("rtcstart",new rtcstart(&rtc));
+	container.RegisterCommand("rtcstop",new rtcstop(&rtc));
+	container.RegisterCommand("play",new buzzeron(&buzzer));
+	container.RegisterCommand("stop",new buzzeroff(&buzzer));
 }
 
 

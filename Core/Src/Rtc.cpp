@@ -1,5 +1,7 @@
 #include "Rtc.h"
 #include "mymain.h"
+#include <stdio.h>
+#include "main.h"
 #define RTC_START_STOP      (1 << 7)
 #define RTC_DATE_TIME_SIZE  7
 #define DEVICE_ADDR         0xD0
@@ -25,11 +27,10 @@ static const int _daysUntilMonth[] = {
 		365
 };
 
-_RTC::_RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr,DateTime * datetime)
+_RTC::_RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr)
 {
   _hi2c = hi2c;
   _devAddr = devAddr;
-  datetime = datetime;
 }
 
 void _RTC::rtcStart()
@@ -72,17 +73,24 @@ static uint8_t intToBcd(int value, int minVal, int maxVal)
 void _RTC::rtcGetTime()
 {
 	uint8_t buffer[RTC_DATE_TIME_SIZE];
-	HAL_I2C_Mem_Read(_hi2c, _devAddr, 0, 1, buffer, RTC_DATE_TIME_SIZE, 0xFF);
+	DateTime * mytime = new DateTime;
+	if(HAL_I2C_Mem_Read(_hi2c, _devAddr, 0, 1, buffer, RTC_DATE_TIME_SIZE, 0xFF) == HAL_OK){
+		printf("read is good\r\n");
+	}
+	else{
+		printf("write is bad\r\n");
+	}
 
 	// remove stop bit if set
 	buffer[0] &= ~RTC_START_STOP;
-	dateTime->sec = bcdToInt(buffer[0]);
-	dateTime->min = bcdToInt(buffer[1]);
-	dateTime->hours = bcdToInt(buffer[2]);
-	dateTime->weekDay = buffer[3] & 0x07;
-	dateTime->day = bcdToInt(buffer[4]);
-	dateTime->month = bcdToInt(buffer[5]);
-	dateTime->year = bcdToInt(buffer[6]);
+	mytime->sec = bcdToInt(buffer[0]);
+	mytime->min = bcdToInt(buffer[1]);
+	mytime->hours = bcdToInt(buffer[2]);
+	mytime->weekDay = buffer[3] & 0x07;
+	mytime->day = bcdToInt(buffer[4]);
+	mytime->month = bcdToInt(buffer[5]);
+	mytime->year = bcdToInt(buffer[6]);
+	printf("date is %02d:%02d:%02d  %02d %02d/%02d/%02d \r\n ",mytime->hours,mytime->min,mytime->sec,mytime->weekDay,mytime->day,mytime->month,mytime->year);
 }
 
 //uint32_t _RTC::rtcGetSeconds()
@@ -120,5 +128,10 @@ void _RTC::rtcSetTime(DateTime * _datetime)
 	buffer[5] = intToBcd(dateTime->month, 1, 12);
 	buffer[6] = intToBcd(dateTime->year, 1, 99);
 
-	HAL_I2C_Mem_Write(_hi2c, _devAddr, 0, 1, buffer, RTC_DATE_TIME_SIZE, 0xFF);
+	if(HAL_I2C_Mem_Write(_hi2c, _devAddr, 0, 1, buffer, RTC_DATE_TIME_SIZE, 0xFF) == HAL_OK){
+		printf("write is good\r\n");
+	}
+	else{
+		printf("write is bad\r\n");
+	}
 }

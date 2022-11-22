@@ -12,15 +12,14 @@ class LED {
 private:
 	GPIO_TypeDef* GPIOx;
 	uint16_t GPIO_Pin;
-	int blinkcount;
-	int delay;
-	int blink;
+	int blinkcount = 0;
+	int delay = 50 ;
+
 	LED_STATE STATE;
 
 public:
 	LED(GPIO_TypeDef* GPIOx,
-	uint16_t GPIO_Pin,
-	int blinkcount,int delay,int blink,LED_STATE STATE);
+	uint16_t GPIO_Pin);
 
 	void Led_On();
 	void Led_Off();

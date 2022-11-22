@@ -16,6 +16,7 @@ private:
 	GPIO_TypeDef* _GPIOx;
 	uint16_t _GPIO_Pin;
 	DHT_STATE dhtPin;
+	double Temperature;
 	int bitcount;
 	int delay=0;
 	uint8_t dht_byte= 0;
@@ -28,6 +29,7 @@ public:
 	void Dht_readAsync();
 	void Dht_onGpioInterrupt(uint16_t pin);
 	int Dht_hasData();
+	int get_temperature();
 	void DHT_onTimerInteruppt();
 
 };

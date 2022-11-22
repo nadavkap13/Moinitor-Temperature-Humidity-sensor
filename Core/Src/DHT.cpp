@@ -7,7 +7,7 @@
 
 
 GPIO_InitTypeDef gpioStruct;
-extern uint8_t DHT_data[5];
+static uint8_t DHT_data[5];
 extern TIM_HandleTypeDef htim1;
 
 DHT::DHT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
@@ -95,15 +95,17 @@ void DHT::Dht_onGpioInterrupt(uint16_t pin)
 }
 
 int DHT::Dht_hasData(){
-                     	if (dhtPin==DATA_RECEIVED){
-//		startdelay=0;
-//		delay =0;
+	if (dhtPin==DATA_RECEIVED){
+		Temperature = (double)DHT_data[2];
 		dhtPin=WAKING;
 		return 1;
 	}
 	return 0;
 }
-
+int DHT::get_temperature()
+{
+	return Temperature;
+}
 
 //void DHT_onTimerInteruppt(DHT* dht){
 // if(startdelay==1){

@@ -8,10 +8,13 @@
 #include "comtask.h"
 #include "cmsis_os.h"
 #include "Rtc.h"
+#include "LED.h"
 
 DHT dht = DHT(GPIOB,pin_4_Pin);
-_RTC rtc =
-uint8_t DHT_data[5];
+_RTC rtc = _RTC(&hi2c1,0xD0);
+CliContainer container = CliContainer();
+LED ledblue = LED(LD2_GPIO_Port, LD2_Pin);
+BUZZER buzzer = BUZZER(&htim3);
 int alarm_on = 0;
 
 int _write(int fd, char *ptr, int len) {
@@ -29,16 +32,16 @@ void mycallback(){
 void mymaininit()
 {
 	HAL_NVIC_EnableIRQ(TIM6_IRQn);
-	HAL_TIM_Base_Start_IT(&htim3);
 	HAL_TIM_Base_Start_IT(&htim6);
+	HAL_TIM_Base_Start(&htim3);
 	HAL_TIM_Base_Start_IT(&htim1);
-
+	container.initCLIcontainer();
 }
 
 void myloop()
 {
 	if(dht.Dht_hasData()){
-			 printf("temp is : %d\n\r humid is : %d\r\n", DHT_data[2],DHT_data[0]);
+
 		}
 }
 
@@ -51,7 +54,9 @@ void READ_TEMP_func(void *argument)
   for(;;)
   {
 	  osSemaphoreAcquire(DHT_MONITORHandle, 0xFF);
-	 // myloop();
+	  if(dht.Dht_hasData()){
+
+	  }
 
   }
   /* USER CODE END 5 */

@@ -3,8 +3,8 @@
 #include "main.h"
 #include "LED.h"
 
-LED::LED(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin,int blinkcount,int delay,int blink,LED_STATE STATE):
-		GPIOx(GPIOx),GPIO_Pin(GPIO_Pin),blinkcount(blinkcount),delay(delay),blink(blink),STATE(STATE)
+LED::LED(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin):
+		GPIOx(GPIOx),GPIO_Pin(GPIO_Pin)
 {
 }
 
@@ -29,26 +29,26 @@ void LED::Led_Blink()
 	}
 		blinkcount++;
 }
-int LED::Is_blink()
-{
-	return blink;
-}
+//int LED::Is_blink()
+//{
+//	return blink;
+//}
 
-void LED::LEDchangeState()
-{
-	switch (STATE){
-	case LED_STATE_OFF:
-		STATE = LED_STATE_ON;
-		Led_On();
-		break;
-	case LED_STATE_ON:
-		STATE = LED_STATE_BLINK;
-		blink = 1;
-			break;
-	case LED_STATE_BLINK:
-		STATE = LED_STATE_OFF;
-		blink = 0;
-		Led_Off();
-			break;
-	}
-}
+//void LED::LEDchangeState()
+//{
+//	switch (STATE){
+//	case LED_STATE_OFF:
+//		STATE = LED_STATE_ON;
+//		Led_On();
+//		break;
+//	case LED_STATE_ON:
+//		STATE = LED_STATE_BLINK;
+//		blink = 1;
+//			break;
+//	case LED_STATE_BLINK:
+//		STATE = LED_STATE_OFF;
+//		blink = 0;
+//		Led_Off();
+//			break;
+//	}
+//}
