@@ -7,6 +7,7 @@
 #include "Rtc.h"
 #include "comtask.h"
 #include "mybuzzer.h"
+#include "temperture_monitor.h"
 
 extern LED ledblue;
 extern int blinkOn;
@@ -161,8 +162,30 @@ public:
 		_buzzer->buzzerStopPlay();
 	}
 };
-
-
+class setwarning : public Cli{
+private:
+	Monitor * _monitor;
+public:
+	setwarning(Monitor * monitor){
+		_monitor = monitor;
+	}
+	void doCommand(const char * param) override{
+		int _param = atoi(param);
+		_monitor->SetWarningValue(_param);
+	}
+};
+class setcritical : public Cli{
+private:
+	Monitor * _monitor;
+public:
+	setcritical(Monitor * monitor){
+		_monitor = monitor;
+	}
+	void doCommand(const char * param) override{
+		int _param = atoi(param);
+		_monitor->SetCriticalValue(_param);
+	}
+};
 void CliContainer::initCLIcontainer(){
 	container.RegisterCommand("ledon",new ledOn(&ledblue));
 	container.RegisterCommand("ledoff",new ledOff(&ledblue));

@@ -23,16 +23,14 @@ void LED::LED_delay(int num){
 }
 void LED::Led_Blink()
 {
-	if (blinkcount >= delay){
-		HAL_GPIO_TogglePin(GPIOx,GPIO_Pin);
-		blinkcount = 0;
-	}
-		blinkcount++;
+	HAL_GPIO_TogglePin(GPIOx, GPIO_Pin);
+	osDelay(delay);
+
 }
-//int LED::Is_blink()
-//{
-//	return blink;
-//}
+void LED::Is_blink()
+{
+	STATE = LED_STATE_BLINK;
+}
 
 //void LED::LEDchangeState()
 //{

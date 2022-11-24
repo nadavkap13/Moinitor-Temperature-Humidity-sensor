@@ -3,3 +3,4 @@
 ../Core/Src/LED.cpp:16:6:void LED::Led_Off()	16	static
 ../Core/Src/LED.cpp:21:6:void LED::LED_delay(int)	16	static
 ../Core/Src/LED.cpp:24:6:void LED::Led_Blink()	16	static
+../Core/Src/LED.cpp:30:6:void LED::Is_blink()	16	static

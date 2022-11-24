@@ -102,7 +102,7 @@ int DHT::Dht_hasData(){
 	}
 	return 0;
 }
-int DHT::get_temperature()
+double DHT::get_temperature()
 {
 	return Temperature;
 }

@@ -73,6 +73,13 @@ const osThreadAttr_t MONITOR_TEMP_attributes = {
   .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for BLINK_TASK */
+osThreadId_t BLINK_TASKHandle;
+const osThreadAttr_t BLINK_TASK_attributes = {
+  .name = "BLINK_TASK",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for DHT_MONITOR */
 osSemaphoreId_t DHT_MONITORHandle;
 const osSemaphoreAttr_t DHT_MONITOR_attributes = {
@@ -93,6 +100,7 @@ static void MX_I2C1_Init(void);
 void READ_TEMP_func(void *argument);
 void comtask_func(void *argument);
 void monitor_func(void *argument);
+void blink_func(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -171,6 +179,9 @@ int main(void)
 
   /* creation of MONITOR_TEMP */
   MONITOR_TEMPHandle = osThreadNew(monitor_func, NULL, &MONITOR_TEMP_attributes);
+
+  /* creation of BLINK_TASK */
+  BLINK_TASKHandle = osThreadNew(blink_func, NULL, &BLINK_TASK_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -503,6 +514,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : button_Pin */
+  GPIO_InitStruct.Pin = button_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(button_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : pin_4_Pin */
   GPIO_InitStruct.Pin = pin_4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
@@ -576,6 +593,24 @@ __weak void monitor_func(void *argument)
 
   }
   /* USER CODE END monitor_func */
+}
+
+/* USER CODE BEGIN Header_blink_func */
+/**
+* @brief Function implementing the BLINK_TASK thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_blink_func */
+__weak void blink_func(void *argument)
+{
+  /* USER CODE BEGIN blink_func */
+  /* Infinite loop */
+  for(;;)
+  {
+
+  }
+  /* USER CODE END blink_func */
 }
 
 /**

@@ -29,7 +29,7 @@ public:
 	void Dht_readAsync();
 	void Dht_onGpioInterrupt(uint16_t pin);
 	int Dht_hasData();
-	int get_temperature();
+	double get_temperature();
 	void DHT_onTimerInteruppt();
 
 };

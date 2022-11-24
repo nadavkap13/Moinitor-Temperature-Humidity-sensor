@@ -14,7 +14,6 @@ private:
 	uint16_t GPIO_Pin;
 	int blinkcount = 0;
 	int delay = 50 ;
-
 	LED_STATE STATE;
 
 public:
@@ -25,7 +24,7 @@ public:
 	void Led_Off();
 	void LED_delay(int num);
 	void Led_Blink();
-	int Is_blink();
+	void Is_blink();
 	void LEDchangeState();
 };
 
