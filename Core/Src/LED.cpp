@@ -10,11 +10,13 @@ LED::LED(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin):
 
 void LED::Led_On()
 {
+	STATE = LED_STATE_ON;
 	HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_SET);
 
 }
 void LED::Led_Off()
 {
+	STATE = LED_STATE_OFF;
 	HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_RESET);
 
 }
@@ -30,6 +32,10 @@ void LED::Led_Blink()
 void LED::Is_blink()
 {
 	STATE = LED_STATE_BLINK;
+}
+LED_STATE LED:: getState()
+{
+	return STATE;
 }
 
 //void LED::LEDchangeState()

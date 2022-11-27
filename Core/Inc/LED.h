@@ -25,6 +25,7 @@ public:
 	void LED_delay(int num);
 	void Led_Blink();
 	void Is_blink();
+	LED_STATE getState();
 	void LEDchangeState();
 };
 

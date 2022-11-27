@@ -20,6 +20,7 @@ void mycallback();
 void READ_TEMP_func(void *argument);
 void comtask_func(void *argument);
 void monitor_func(void *argument);
+void blink_func(void *argument);
 #ifdef __cplusplus
 }
 #endif

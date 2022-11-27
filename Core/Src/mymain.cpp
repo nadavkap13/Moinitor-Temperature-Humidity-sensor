@@ -28,6 +28,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	dht.Dht_onGpioInterrupt(pin_4_Pin);
 	if(HAL_GPIO_ReadPin(button_GPIO_Port, button_Pin) == 0){
+		monitor.setstate(CRITICAL_STATE_NO_BUZZER);
 		buzzer.buzzerStopPlay();
 	}
 
@@ -59,8 +60,12 @@ void READ_TEMP_func(void *argument)
   for(;;)
   {
   osSemaphoreAcquire(DHT_MONITORHandle, 0xFF);
+
 	  if(dht.Dht_hasData()){
-		 if(dht.get_temperature()>= monitor.getcritical()){
+		 if(monitor.getstate() == CRITICAL_STATE_NO_BUZZER && dht.get_temperature()>= monitor.getcritical() ){
+			 ledblue.Is_blink();
+		 }
+		 else if(dht.get_temperature()>= monitor.getcritical()){
 			 monitor.setstate(CRITICAL_STATE);
 			 ledblue.Is_blink();
 			 buzzer.buzzerStartPlay();
@@ -110,7 +115,7 @@ void blink_func(void *argument)
  /* Infinite loop */
  for(;;)
  {
-	 if(monitor.getstate() == CRITICAL_STATE || monitor.getstate() == CRITICAL_STATE_NO_BUZZER ){
+	 if(ledblue.getState() == LED_STATE_BLINK){
 		 ledblue.Led_Blink();
 	 }
 	 else {
