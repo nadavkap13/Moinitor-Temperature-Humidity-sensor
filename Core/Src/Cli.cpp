@@ -8,12 +8,19 @@
 #include "comtask.h"
 #include "mybuzzer.h"
 #include "temperture_monitor.h"
+#include "SD_FILE.h"
+#include "myFlash.h"
 
 extern LED ledblue;
 extern int blinkOn;
 extern _RTC rtc;
 extern CliContainer container;
 extern BUZZER buzzer;
+extern _FILE event_file;
+extern _FILE temperature_file;
+extern _Flash flash;
+extern Monitor monitor;
+
 class ledOn : public Cli{
 private:
 	LED * _led;
@@ -172,6 +179,8 @@ public:
 	void doCommand(const char * param) override{
 		int _param = atoi(param);
 		_monitor->SetWarningValue(_param);
+		flash.erase();
+		flash.program(_monitor->getthresholds());
 	}
 };
 class setcritical : public Cli{
@@ -184,18 +193,47 @@ public:
 	void doCommand(const char * param) override{
 		int _param = atoi(param);
 		_monitor->SetCriticalValue(_param);
+		flash.erase();
+		flash.program(_monitor->getthresholds());
 	}
 };
+class print_file : public Cli{
+private:
+	_FILE * _file;
+public:
+	print_file(_FILE * file){
+		_file = file;
+	}
+	void doCommand(const char * param) override{
+		_file->read();
+	}
+};
+class delete_file : public Cli{
+private:
+	_FILE * _file;
+public:
+	delete_file(_FILE * file){
+		_file = file;
+	}
+	void doCommand(const char * param) override{
+		_file->FILE_delete();
+	}
+};
+
 void CliContainer::initCLIcontainer(){
 	container.RegisterCommand("ledon",new ledOn(&ledblue));
 	container.RegisterCommand("ledoff",new ledOff(&ledblue));
-	container.RegisterCommand("ledblink",new ledBlink(&ledblue));
 	container.RegisterCommand("settime",new rtcsettime(&rtc));
 	container.RegisterCommand("gettime",new rtcgettime(&rtc));
-	container.RegisterCommand("rtcstart",new rtcstart(&rtc));
-	container.RegisterCommand("rtcstop",new rtcstop(&rtc));
 	container.RegisterCommand("play",new buzzeron(&buzzer));
 	container.RegisterCommand("stop",new buzzeroff(&buzzer));
+	container.RegisterCommand("printtemp",new print_file(&temperature_file));
+	container.RegisterCommand("printlog",new print_file(&event_file));
+	container.RegisterCommand("deletetemp",new delete_file(&temperature_file));
+	container.RegisterCommand("deletelog",new delete_file(&event_file));
+	container.RegisterCommand("setwarrning",new setwarning(&monitor));
+	container.RegisterCommand("setcritical",new setcritical(&monitor));
+
 }
 
 

@@ -165,7 +165,7 @@ DRESULT USER_ioctl (
 {
   /* USER CODE BEGIN IOCTL */
 
-    DRESULT res = RES_ERROR;
+  //  DRESULT res = RES_ERROR;
     return USER_SPI_ioctl(pdrv, cmd, buff);
   /* USER CODE END IOCTL */
 }

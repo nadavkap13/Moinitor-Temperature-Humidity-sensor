@@ -9,17 +9,13 @@ enum dht_STATE{
 	CRITICAL_STATE_NO_BUZZER
 };
 
-typedef struct{
-	uint32_t magicnum;
-	double warning_threshhold;
-	double critical_threshhold;
+typedef struct thresholds{
+	uint32_t magicnum = 123456;
+	double warning = 100;
+	double critical = 100;
 }_SETTINGS;
 class Monitor{
 private:
-	struct thresholds{
-		double warning = 26;
-		double critical = 28;
-	};
 	thresholds values;
 	dht_STATE state;
 public:
@@ -33,13 +29,13 @@ public:
 		values.critical = num;
 	}
 	double getwarning()
-		{
-			return values.warning;
-		}
+	{
+		return values.warning;
+	}
 	double getcritical()
-		{
-			return values.critical;
-		}
+	{
+		return values.critical;
+	}
 	dht_STATE getstate()
 	{
 		return state;
@@ -47,6 +43,10 @@ public:
 	void setstate(dht_STATE State)
 	{
 		state = State;
+	}
+	thresholds * getthresholds()
+	{
+		return  &values;
 	}
 };
 

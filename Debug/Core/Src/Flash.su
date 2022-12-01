@@ -1,4 +1,0 @@
-../Core/Src/Flash.cpp:24:6:void pageSelect(FLASH_EraseInitTypeDef*)	16	static
-../Core/Src/Flash.cpp:32:6:void pageErase()	32	static
-../Core/Src/Flash.cpp:59:6:void eraseIT()	24	static
-../Core/Src/Flash.cpp:70:6:void programIT()	8	static

@@ -4,5 +4,6 @@
 ../Core/Src/Rtc.cpp:52:5:int _RTC::rtcIsRunning()	40	static
 ../Core/Src/Rtc.cpp:59:12:int bcdToInt(uint8_t)	16	static
 ../Core/Src/Rtc.cpp:64:16:uint8_t intToBcd(int, int, int)	24	static
-../Core/Src/Rtc.cpp:73:6:void _RTC::rtcGetTime()	64	static
-../Core/Src/Rtc.cpp:118:6:void _RTC::rtcSetTime(DateTime*)	40	static
+../Core/Src/Rtc.cpp:73:6:void _RTC::rtcGetTime()	56	static
+../Core/Src/Rtc.cpp:118:12:DateTime* _RTC::rtcTimeToString()	40	static
+../Core/Src/Rtc.cpp:139:6:void _RTC::rtcSetTime(DateTime*)	40	static

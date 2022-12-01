@@ -1,41 +1,50 @@
-../Core/Inc/Cli.h:10:10:Cli::~Cli()	16	static
-../Core/Inc/Cli.h:10:10:virtual Cli::~Cli()	16	static
-../Core/Inc/Cli.h:26:7:void CliContainer::RegisterCommand(const char*, Cli*)	24	static
-../Core/Inc/Cli.h:6:7:constexpr Cli::Cli()	16	static
-../Core/Src/Cli.cpp:21:2:ledOn::ledOn(LED*)	16	static
-../Core/Src/Cli.cpp:24:7:virtual void ledOn::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:32:2:ledOff::ledOff(LED*)	16	static
-../Core/Src/Cli.cpp:35:7:virtual void ledOff::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:43:2:ledBlink::ledBlink(LED*)	16	static
-../Core/Src/Cli.cpp:46:7:virtual void ledBlink::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:67:2:rtcstart::rtcstart(_RTC*)	16	static
-../Core/Src/Cli.cpp:70:7:virtual void rtcstart::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:79:2:rtcgettime::rtcgettime(_RTC*)	16	static
-../Core/Src/Cli.cpp:82:7:virtual void rtcgettime::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:92:2:rtcsettime::rtcsettime(_RTC*)	16	static
-../Core/Src/Cli.cpp:95:7:virtual void rtcsettime::doCommand(const char*)	104	static
-../Core/Src/Cli.cpp:135:2:rtcstop::rtcstop(_RTC*)	16	static
-../Core/Src/Cli.cpp:138:7:virtual void rtcstop::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:147:2:buzzeron::buzzeron(BUZZER*)	16	static
-../Core/Src/Cli.cpp:150:7:virtual void buzzeron::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:158:2:buzzeroff::buzzeroff(BUZZER*)	16	static
-../Core/Src/Cli.cpp:161:7:virtual void buzzeroff::doCommand(const char*)	16	static
-../Core/Src/Cli.cpp:189:6:void CliContainer::initCLIcontainer()	24	static
-../Core/Src/Cli.cpp:154:7:buzzeroff::~buzzeroff()	16	static
-../Core/Src/Cli.cpp:154:7:virtual buzzeroff::~buzzeroff()	16	static
-../Core/Src/Cli.cpp:143:7:buzzeron::~buzzeron()	16	static
-../Core/Src/Cli.cpp:143:7:virtual buzzeron::~buzzeron()	16	static
-../Core/Src/Cli.cpp:131:7:rtcstop::~rtcstop()	16	static
-../Core/Src/Cli.cpp:131:7:virtual rtcstop::~rtcstop()	16	static
-../Core/Src/Cli.cpp:88:7:rtcsettime::~rtcsettime()	16	static
-../Core/Src/Cli.cpp:88:7:virtual rtcsettime::~rtcsettime()	16	static
-../Core/Src/Cli.cpp:75:7:rtcgettime::~rtcgettime()	16	static
-../Core/Src/Cli.cpp:75:7:virtual rtcgettime::~rtcgettime()	16	static
-../Core/Src/Cli.cpp:63:7:rtcstart::~rtcstart()	16	static
-../Core/Src/Cli.cpp:63:7:virtual rtcstart::~rtcstart()	16	static
-../Core/Src/Cli.cpp:39:7:ledBlink::~ledBlink()	16	static
-../Core/Src/Cli.cpp:39:7:virtual ledBlink::~ledBlink()	16	static
-../Core/Src/Cli.cpp:28:7:ledOff::~ledOff()	16	static
-../Core/Src/Cli.cpp:28:7:virtual ledOff::~ledOff()	16	static
-../Core/Src/Cli.cpp:17:7:ledOn::~ledOn()	16	static
-../Core/Src/Cli.cpp:17:7:virtual ledOn::~ledOn()	16	static
+../Core/Inc/Cli.h:11:10:Cli::~Cli()	16	static
+../Core/Inc/Cli.h:11:10:virtual Cli::~Cli()	16	static
+../Core/Inc/Cli.h:27:7:void CliContainer::RegisterCommand(const char*, Cli*)	24	static
+../Core/Inc/temperture_monitor.h:23:7:void Monitor::SetWarningValue(double)	24	static
+../Core/Inc/temperture_monitor.h:27:7:void Monitor::SetCriticalValue(double)	24	static
+../Core/Inc/temperture_monitor.h:47:15:thresholds* Monitor::getthresholds()	16	static
+../Core/Inc/SD_FILE.h:21:7:void _FILE::read()	224	static
+../Core/Inc/SD_FILE.h:71:7:void _FILE::FILE_delete()	16	static
+../Core/Inc/Cli.h:7:7:constexpr Cli::Cli()	16	static
+../Core/Src/Cli.cpp:28:2:ledOn::ledOn(LED*)	16	static
+../Core/Src/Cli.cpp:31:7:virtual void ledOn::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:39:2:ledOff::ledOff(LED*)	16	static
+../Core/Src/Cli.cpp:42:7:virtual void ledOff::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:86:2:rtcgettime::rtcgettime(_RTC*)	16	static
+../Core/Src/Cli.cpp:89:7:virtual void rtcgettime::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:99:2:rtcsettime::rtcsettime(_RTC*)	16	static
+../Core/Src/Cli.cpp:102:7:virtual void rtcsettime::doCommand(const char*)	104	static
+../Core/Src/Cli.cpp:154:2:buzzeron::buzzeron(BUZZER*)	16	static
+../Core/Src/Cli.cpp:157:7:virtual void buzzeron::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:165:2:buzzeroff::buzzeroff(BUZZER*)	16	static
+../Core/Src/Cli.cpp:168:7:virtual void buzzeroff::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:176:2:setwarning::setwarning(Monitor*)	16	static
+../Core/Src/Cli.cpp:179:7:virtual void setwarning::doCommand(const char*)	32	static
+../Core/Src/Cli.cpp:190:2:setcritical::setcritical(Monitor*)	16	static
+../Core/Src/Cli.cpp:193:7:virtual void setcritical::doCommand(const char*)	32	static
+../Core/Src/Cli.cpp:204:2:print_file::print_file(_FILE*)	16	static
+../Core/Src/Cli.cpp:207:7:virtual void print_file::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:215:2:delete_file::delete_file(_FILE*)	16	static
+../Core/Src/Cli.cpp:218:7:virtual void delete_file::doCommand(const char*)	16	static
+../Core/Src/Cli.cpp:223:6:void CliContainer::initCLIcontainer()	24	static
+../Core/Src/Cli.cpp:211:7:delete_file::~delete_file()	16	static
+../Core/Src/Cli.cpp:211:7:virtual delete_file::~delete_file()	16	static
+../Core/Src/Cli.cpp:200:7:print_file::~print_file()	16	static
+../Core/Src/Cli.cpp:200:7:virtual print_file::~print_file()	16	static
+../Core/Src/Cli.cpp:186:7:setcritical::~setcritical()	16	static
+../Core/Src/Cli.cpp:186:7:virtual setcritical::~setcritical()	16	static
+../Core/Src/Cli.cpp:172:7:setwarning::~setwarning()	16	static
+../Core/Src/Cli.cpp:172:7:virtual setwarning::~setwarning()	16	static
+../Core/Src/Cli.cpp:161:7:buzzeroff::~buzzeroff()	16	static
+../Core/Src/Cli.cpp:161:7:virtual buzzeroff::~buzzeroff()	16	static
+../Core/Src/Cli.cpp:150:7:buzzeron::~buzzeron()	16	static
+../Core/Src/Cli.cpp:150:7:virtual buzzeron::~buzzeron()	16	static
+../Core/Src/Cli.cpp:95:7:rtcsettime::~rtcsettime()	16	static
+../Core/Src/Cli.cpp:95:7:virtual rtcsettime::~rtcsettime()	16	static
+../Core/Src/Cli.cpp:82:7:rtcgettime::~rtcgettime()	16	static
+../Core/Src/Cli.cpp:82:7:virtual rtcgettime::~rtcgettime()	16	static
+../Core/Src/Cli.cpp:35:7:ledOff::~ledOff()	16	static
+../Core/Src/Cli.cpp:35:7:virtual ledOff::~ledOff()	16	static
+../Core/Src/Cli.cpp:24:7:ledOn::~ledOn()	16	static
+../Core/Src/Cli.cpp:24:7:virtual ledOn::~ledOn()	16	static

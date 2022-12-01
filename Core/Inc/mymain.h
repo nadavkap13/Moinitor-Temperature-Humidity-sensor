@@ -15,6 +15,7 @@ extern I2C_HandleTypeDef hi2c1;
 void mymaininit();
 void myloop();
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+void mySDInit();
 int _write(int fd, char* ptr, int len);
 void mycallback();
 void READ_TEMP_func(void *argument);

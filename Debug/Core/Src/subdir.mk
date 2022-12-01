@@ -18,10 +18,11 @@ CPP_SRCS += \
 ../Core/Src/BUTTON.cpp \
 ../Core/Src/Cli.cpp \
 ../Core/Src/DHT.cpp \
-../Core/Src/Flash.cpp \
 ../Core/Src/LED.cpp \
 ../Core/Src/Rtc.cpp \
+../Core/Src/SD_FILE.cpp \
 ../Core/Src/comtask.cpp \
+../Core/Src/myFlash.cpp \
 ../Core/Src/mybuzzer.cpp \
 ../Core/Src/mymain.cpp \
 ../Core/Src/temperature_monitor.cpp 
@@ -40,12 +41,13 @@ OBJS += \
 ./Core/Src/BUTTON.o \
 ./Core/Src/Cli.o \
 ./Core/Src/DHT.o \
-./Core/Src/Flash.o \
 ./Core/Src/LED.o \
 ./Core/Src/Rtc.o \
+./Core/Src/SD_FILE.o \
 ./Core/Src/comtask.o \
 ./Core/Src/freertos.o \
 ./Core/Src/main.o \
+./Core/Src/myFlash.o \
 ./Core/Src/mybuzzer.o \
 ./Core/Src/mymain.o \
 ./Core/Src/stm32l4xx_hal_msp.o \
@@ -60,10 +62,11 @@ CPP_DEPS += \
 ./Core/Src/BUTTON.d \
 ./Core/Src/Cli.d \
 ./Core/Src/DHT.d \
-./Core/Src/Flash.d \
 ./Core/Src/LED.d \
 ./Core/Src/Rtc.d \
+./Core/Src/SD_FILE.d \
 ./Core/Src/comtask.d \
+./Core/Src/myFlash.d \
 ./Core/Src/mybuzzer.d \
 ./Core/Src/mymain.d \
 ./Core/Src/temperature_monitor.d 
@@ -78,7 +81,7 @@ Core/Src/%.o Core/Src/%.su: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/BUTTON.d ./Core/Src/BUTTON.o ./Core/Src/BUTTON.su ./Core/Src/Cli.d ./Core/Src/Cli.o ./Core/Src/Cli.su ./Core/Src/DHT.d ./Core/Src/DHT.o ./Core/Src/DHT.su ./Core/Src/Flash.d ./Core/Src/Flash.o ./Core/Src/Flash.su ./Core/Src/LED.d ./Core/Src/LED.o ./Core/Src/LED.su ./Core/Src/Rtc.d ./Core/Src/Rtc.o ./Core/Src/Rtc.su ./Core/Src/comtask.d ./Core/Src/comtask.o ./Core/Src/comtask.su ./Core/Src/freertos.d ./Core/Src/freertos.o ./Core/Src/freertos.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/mybuzzer.d ./Core/Src/mybuzzer.o ./Core/Src/mybuzzer.su ./Core/Src/mymain.d ./Core/Src/mymain.o ./Core/Src/mymain.su ./Core/Src/stm32l4xx_hal_msp.d ./Core/Src/stm32l4xx_hal_msp.o ./Core/Src/stm32l4xx_hal_msp.su ./Core/Src/stm32l4xx_hal_timebase_tim.d ./Core/Src/stm32l4xx_hal_timebase_tim.o ./Core/Src/stm32l4xx_hal_timebase_tim.su ./Core/Src/stm32l4xx_it.d ./Core/Src/stm32l4xx_it.o ./Core/Src/stm32l4xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l4xx.d ./Core/Src/system_stm32l4xx.o ./Core/Src/system_stm32l4xx.su ./Core/Src/temperature_monitor.d ./Core/Src/temperature_monitor.o ./Core/Src/temperature_monitor.su
+	-$(RM) ./Core/Src/BUTTON.d ./Core/Src/BUTTON.o ./Core/Src/BUTTON.su ./Core/Src/Cli.d ./Core/Src/Cli.o ./Core/Src/Cli.su ./Core/Src/DHT.d ./Core/Src/DHT.o ./Core/Src/DHT.su ./Core/Src/LED.d ./Core/Src/LED.o ./Core/Src/LED.su ./Core/Src/Rtc.d ./Core/Src/Rtc.o ./Core/Src/Rtc.su ./Core/Src/SD_FILE.d ./Core/Src/SD_FILE.o ./Core/Src/SD_FILE.su ./Core/Src/comtask.d ./Core/Src/comtask.o ./Core/Src/comtask.su ./Core/Src/freertos.d ./Core/Src/freertos.o ./Core/Src/freertos.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/myFlash.d ./Core/Src/myFlash.o ./Core/Src/myFlash.su ./Core/Src/mybuzzer.d ./Core/Src/mybuzzer.o ./Core/Src/mybuzzer.su ./Core/Src/mymain.d ./Core/Src/mymain.o ./Core/Src/mymain.su ./Core/Src/stm32l4xx_hal_msp.d ./Core/Src/stm32l4xx_hal_msp.o ./Core/Src/stm32l4xx_hal_msp.su ./Core/Src/stm32l4xx_hal_timebase_tim.d ./Core/Src/stm32l4xx_hal_timebase_tim.o ./Core/Src/stm32l4xx_hal_timebase_tim.su ./Core/Src/stm32l4xx_it.d ./Core/Src/stm32l4xx_it.o ./Core/Src/stm32l4xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l4xx.d ./Core/Src/system_stm32l4xx.o ./Core/Src/system_stm32l4xx.su ./Core/Src/temperature_monitor.d ./Core/Src/temperature_monitor.o ./Core/Src/temperature_monitor.su
 
 .PHONY: clean-Core-2f-Src
 

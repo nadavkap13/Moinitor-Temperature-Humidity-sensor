@@ -5,7 +5,7 @@
 
 
 
-typedef struct DateTime_
+typedef struct DateTime
 {
 	int sec;
 	int min;
@@ -20,7 +20,7 @@ class _RTC{
 private :
 	I2C_HandleTypeDef * _hi2c;
 	uint8_t _devAddr;
-	DateTime * dateTime;
+	DateTime dateTime;
 public:
 
 	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr);
@@ -36,6 +36,8 @@ public:
 	int rtcIsRunning();
 
 	void rtcGetTime();
+
+	DateTime * rtcTimeToString();
 
 	//uint32_t rtcGetSeconds();
 

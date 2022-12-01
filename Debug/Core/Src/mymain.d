@@ -44,7 +44,13 @@ Core/Src/mymain.o: ../Core/Src/mymain.cpp ../Core/Inc/mymain.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Core/Inc/main.h ../Core/Inc/mybuzzer.h ../Core/Inc/DHT.h \
  ../Core/Inc/comtask.h ../Core/Inc/Cli.h ../Core/Inc/Rtc.h \
- ../Core/Inc/LED.h ../Core/Inc/temperture_monitor.h
+ ../Core/Inc/LED.h ../Core/Inc/temperture_monitor.h ../Core/Inc/SD_FILE.h \
+ ../FATFS/App/fatfs.h ../Middlewares/Third_Party/FatFs/src/ff.h \
+ ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/Target/ffconf.h \
+ ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
+ ../Middlewares/Third_Party/FatFs/src/diskio.h \
+ ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
+ ../Core/Inc/myFlash.h
 ../Core/Inc/mymain.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -98,3 +104,13 @@ Core/Src/mymain.o: ../Core/Src/mymain.cpp ../Core/Inc/mymain.h \
 ../Core/Inc/Rtc.h:
 ../Core/Inc/LED.h:
 ../Core/Inc/temperture_monitor.h:
+../Core/Inc/SD_FILE.h:
+../FATFS/App/fatfs.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../Middlewares/Third_Party/FatFs/src/integer.h:
+../FATFS/Target/ffconf.h:
+../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
+../Middlewares/Third_Party/FatFs/src/diskio.h:
+../Middlewares/Third_Party/FatFs/src/ff.h:
+../FATFS/Target/user_diskio.h:
+../Core/Inc/myFlash.h:
