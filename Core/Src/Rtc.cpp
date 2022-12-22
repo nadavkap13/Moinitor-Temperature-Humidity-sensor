@@ -6,11 +6,6 @@
 #define RTC_DATE_TIME_SIZE  7
 #define DEVICE_ADDR         0xD0
 
-const uint32_t DaysInYear    = 365;
-const uint32_t SecondsInMin  = 60;
-const uint32_t SecondsInHour = 3600;
-const uint32_t SecondsInDay  = 86400;
-
 static const int _daysUntilMonth[] = {
 		0,
 		31,
@@ -27,13 +22,13 @@ static const int _daysUntilMonth[] = {
 		365
 };
 
-_RTC::_RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr)
+Rtc::Rtc(I2C_HandleTypeDef * hi2c, uint32_t devAddr)
 {
   _hi2c = hi2c;
   _devAddr = devAddr;
 }
 
-void _RTC::rtcStart()
+void Rtc::rtcStart()
 {
 	uint8_t sec = 0;
 	HAL_I2C_Mem_Read(_hi2c, _devAddr, 0, 1, &sec, 1, 0xFF);
@@ -41,7 +36,7 @@ void _RTC::rtcStart()
 	HAL_I2C_Mem_Write(_hi2c, _devAddr, 0, 1, &sec, 1, 0xFF);
 }
 
-void _RTC::rtcStop()
+void Rtc::rtcStop()
 {
 	uint8_t sec = 0;
 	HAL_I2C_Mem_Read(_hi2c,_devAddr, 0, 1, &sec, 1, 0xFF);
@@ -49,7 +44,7 @@ void _RTC::rtcStop()
 	HAL_I2C_Mem_Write(_hi2c, _devAddr, 0, 1, &sec, 1, 0xFF);
 }
 
-int _RTC::rtcIsRunning()
+int Rtc::rtcIsRunning()
 {
 	uint8_t sec = 0;
 	HAL_I2C_Mem_Read(_hi2c, _devAddr, 0, 1, &sec, 1, 0xFF);
@@ -70,7 +65,7 @@ static uint8_t intToBcd(int value, int minVal, int maxVal)
 	return ((value / 10) << 4) | (value % 10);
 }
 
-void _RTC::rtcGetTime()
+void Rtc::rtcGetTime()
 {
 	uint8_t buffer[RTC_DATE_TIME_SIZE];
 
@@ -83,39 +78,18 @@ void _RTC::rtcGetTime()
 
 	// remove stop bit if set
 	buffer[0] &= ~RTC_START_STOP;
-	dateTime.sec = bcdToInt(buffer[0]);
-	dateTime.min = bcdToInt(buffer[1]);
-	dateTime.hours = bcdToInt(buffer[2]);
-	dateTime.weekDay = buffer[3] & 0x07;
-	dateTime.day = bcdToInt(buffer[4]);
-	dateTime.month = bcdToInt(buffer[5]);
-	dateTime.year = bcdToInt(buffer[6]);
-	printf("date is %02d:%02d:%02d  %02d %02d/%02d/%02d \r\n ",dateTime.hours,dateTime.min,dateTime.sec,dateTime.weekDay,dateTime.day,dateTime.month,dateTime.year);
+	_dateTime.sec = bcdToInt(buffer[0]);
+	_dateTime.min = bcdToInt(buffer[1]);
+	_dateTime.hours = bcdToInt(buffer[2]);
+	_dateTime.weekDay = buffer[3] & 0x07;
+	_dateTime.day = bcdToInt(buffer[4]);
+	_dateTime.month = bcdToInt(buffer[5]);
+	_dateTime.year = bcdToInt(buffer[6]);
+	printf("date is %02d:%02d:%02d  %02d %02d/%02d/%02d \r\n ",_dateTime.hours,_dateTime.min,_dateTime.sec,_dateTime.weekDay,_dateTime.day,_dateTime.month,_dateTime.year);
 }
 
-//uint32_t _RTC::rtcGetSeconds()
-//{
-//	// calculate seconds from 00:00:00 1/1/2020
-//	dateTime;
-//	rtcGetTime(&dateTime);
-//
-//	uint32_t seconds = dateTime.sec +
-//			dateTime.min * SecondsInMin +
-//			dateTime.hours * SecondsInHour +
-//			dateTime.day * SecondsInDay +
-//			_daysUntilMonth[dateTime.month - 1] * SecondsInDay +
-//			dateTime.year * DaysInYear * SecondsInDay;
-//	if (dateTime.year % 4 == 0 && dateTime.month > 2) {
-//		// if current year is a leap year and month is after February
-//		// add seconds for February 29
-//		seconds += SecondsInDay;
-//	}
-//	// add seconds for all previous leap years
-//	seconds += (dateTime.year / 4) * SecondsInDay;
-//	return seconds;
-//}
 
-DateTime * _RTC::rtcTimeToString(){
+DateTime * Rtc::rtcTimeToString(){
 	uint8_t buffer[RTC_DATE_TIME_SIZE];
 
 		if(HAL_I2C_Mem_Read(_hi2c, _devAddr, 0, 1, buffer, RTC_DATE_TIME_SIZE, 0xFF) == HAL_OK){
@@ -127,16 +101,16 @@ DateTime * _RTC::rtcTimeToString(){
 
 		// remove stop bit if set
 		buffer[0] &= ~RTC_START_STOP;
-		dateTime.sec = bcdToInt(buffer[0]);
-		dateTime.min = bcdToInt(buffer[1]);
-		dateTime.hours = bcdToInt(buffer[2]);
-		dateTime.weekDay = buffer[3] & 0x07;
-		dateTime.day = bcdToInt(buffer[4]);
-		dateTime.month = bcdToInt(buffer[5]);
-		dateTime.year = bcdToInt(buffer[6]);
-		return &dateTime;
+		_dateTime.sec = bcdToInt(buffer[0]);
+		_dateTime.min = bcdToInt(buffer[1]);
+		_dateTime.hours = bcdToInt(buffer[2]);
+		_dateTime.weekDay = buffer[3] & 0x07;
+		_dateTime.day = bcdToInt(buffer[4]);
+		_dateTime.month = bcdToInt(buffer[5]);
+		_dateTime.year = bcdToInt(buffer[6]);
+		return &_dateTime;
 }
-void _RTC::rtcSetTime(DateTime * _dateTime)
+void Rtc::rtcSetTime(DateTime * _dateTime)
 {
 
 	uint8_t buffer[RTC_DATE_TIME_SIZE];

@@ -4,23 +4,24 @@
 #include "fatfs.h"
 #include <stdio.h>
 #include <string.h>
-class _FILE{
+class File{
 private:
-	char filename[20];
+	char _filename[20];
 	FATFS  _FatFs; 	//Fatfs handle
 	FIL  _file; 		//File handle
 	FRESULT  _fres;   //Result after operations
 public:
-	_FILE(FIL  file,FATFS  FatFs,FRESULT  fres, const char * name){
+	File(FIL  file,FATFS  FatFs,FRESULT  fres, const char * name)
+	{
 		this->_file = file;
 		this->_FatFs = FatFs;
 		this->_fres = fres;
-		strcpy(filename,name);
+		strcpy(_filename,name);
 	}
-
-	void read(){
+	void read()
+	{
 	  //Now let's try to open file "test.txt"
-	  _fres = f_open(&_file, filename , FA_READ);
+	  _fres = f_open(&_file, _filename , FA_READ);
 	  if (_fres != FR_OK) {
 		printf("f_open error (%i)\r\n", _fres);
 		while(1);
@@ -43,9 +44,9 @@ public:
 	  //Be a tidy kiwi - don't forget to close your file!
 	  f_close(&_file);
 	}
-	void write(char * writeBuf ){
+	void write(char * writeBuf){
 	  //Now let's try and write a file "write.txt"
-	  _fres = f_open(&_file, filename, FA_WRITE | FA_OPEN_APPEND );
+	  _fres = f_open(&_file, _filename, FA_WRITE | FA_OPEN_APPEND );
 	  if(_fres == FR_OK) {
 		printf("I was able to open 'file.txt' for writing\r\n");
 	  } else {
@@ -67,10 +68,10 @@ public:
 
 	  //We're done, so de-mount the drive
 
-}
-	void FILE_delete()
+	}
+	void deleteFile()
 	{
-		f_unlink(filename);
+		f_unlink(_filename);
 	}
 
 };

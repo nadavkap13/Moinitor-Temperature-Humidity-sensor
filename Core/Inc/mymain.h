@@ -12,16 +12,16 @@ extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart2;
 extern osSemaphoreId_t DHT_MONITORHandle;
 extern I2C_HandleTypeDef hi2c1;
-void mymaininit();
-void myloop();
+void myMainInit();
+void myLoop();
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 void mySDInit();
-int _write(int fd, char* ptr, int len);
-void mycallback();
-void READ_TEMP_func(void *argument);
-void comtask_func(void *argument);
-void monitor_func(void *argument);
-void blink_func(void *argument);
+int write(int fd, char* ptr, int len);
+void myCallback();
+void readTempFunc(void *argument);
+void comtaskFunc(void *argument);
+void monitorFunc(void *argument);
+void blinkFunc(void *argument);
 #ifdef __cplusplus
 }
 #endif

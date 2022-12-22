@@ -3,34 +3,32 @@
 #include "main.h"
 #include <stdint.h>
 
-typedef enum  {
+enum  DhtState{
 	WAKING,
 	WAIT_RESPONSE_START,
 	WAIT_RESPONSE_STOP,
 	RECEIVING_BITS,
 	DATA_RECEIVED
-}DHT_STATE;
+};
 
-class DHT{
+class Dht{
 private:
 	GPIO_TypeDef* _GPIOx;
 	uint16_t _GPIO_Pin;
-	DHT_STATE dhtPin;
-	double Temperature;
-	int bitcount;
-	int delay=0;
-	uint8_t dht_byte= 0;
-	uint8_t m= 0;
-	uint8_t p= 0;
+	DhtState _dhtPin;
+	double _Temperature;
+	int _bitcount;
+	int _delay=0;
+
 public:
 
-	 DHT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+	 Dht(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 	void setGpioExti();
-	void Dht_readAsync();
-	void Dht_onGpioInterrupt(uint16_t pin);
-	int Dht_hasData();
-	double get_temperature();
-	void DHT_onTimerInteruppt();
+	void dhtReadAsync();
+	void dhtOnGpioInterrupt(uint16_t pin);
+	int dhtHasData();
+	double getTemperature();
+
 
 };
 

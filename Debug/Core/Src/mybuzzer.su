@@ -1,3 +1,3 @@
-../Core/Src/mybuzzer.cpp:12:1:BUZZER::BUZZER(TIM_HandleTypeDef*)	16	static
-../Core/Src/mybuzzer.cpp:17:6:void BUZZER::buzzerStartPlay()	16	static
-../Core/Src/mybuzzer.cpp:23:6:void BUZZER::buzzerStopPlay()	16	static
+../Core/Src/mybuzzer.cpp:10:1:Buzzer::Buzzer(TIM_HandleTypeDef*)	16	static
+../Core/Src/mybuzzer.cpp:15:6:void Buzzer::buzzerStartPlay()	16	static
+../Core/Src/mybuzzer.cpp:21:6:void Buzzer::buzzerStopPlay()	16	static

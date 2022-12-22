@@ -10,11 +10,11 @@
 
 #define MAX_LENGTH 256
 const uint32_t ADRESS = (0x08080000UL);
- _Flash *_Flash:: _Instance = 0;
- _Flash * _Flash::Instance()
+Flash * Flash:: _Instance = 0;
+Flash * Flash::Instance()
  {
 	 if(_Instance == 0){
-		 _Instance = new _Flash;
+		 _Instance = new Flash;
 	 }
 	 return _Instance;
  }
@@ -25,7 +25,7 @@ static void pageSelect (FLASH_EraseInitTypeDef * page)
 	page->Page = 256;
 	page->NbPages = 1;
 }
-_Flash::_Flash()
+Flash::Flash()
 {
 	pageSelect(_page);
 }
@@ -40,7 +40,7 @@ void pageErase()
 	}
 }
 
-void _Flash::erase()
+void Flash::erase()
 {
 	HAL_FLASH_Unlock();
 	static uint32_t pageerror = 0;
@@ -49,11 +49,11 @@ void _Flash::erase()
 		}
 }
 
-void _Flash::program(void * obj)
+void Flash::program(void * obj)
 {
 	uint32_t flashindex = 0;
 	uint8_t* ptr = (uint8_t*)(obj);
-	for (size_t i = 0 ; i < sizeof(thresholds) ; i+=sizeof(uint64_t))
+	for (size_t i = 0 ; i < sizeof(thresHolds) ; i+=sizeof(uint64_t))
 	{
 		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, ADRESS+flashindex, *(uint64_t*)(ptr+flashindex)) != HAL_OK) {
 			printf("Program failed\r\n");

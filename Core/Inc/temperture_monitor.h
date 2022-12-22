@@ -2,51 +2,51 @@
 #define INC_TEMPERTURE_MONITOR_H_
 #include "main.h"
 #include "stdint.h"
-enum dht_STATE{
+enum MointorState{
 	NORMAL_STATE,
 	WARRNING_STATE,
 	CRITICAL_STATE,
 	CRITICAL_STATE_NO_BUZZER
 };
 
-typedef struct thresholds{
-	uint32_t magicnum = 123456;
-	double warning = 100;
-	double critical = 100;
-}_SETTINGS;
+struct thresHolds{
+	uint32_t _magicnum = 123456;
+	double _warning = 100;
+	double _critical = 100;
+};
 class Monitor{
 private:
-	thresholds values;
-	dht_STATE state;
+	thresHolds _values;
+	MointorState _state;
 public:
 	Monitor(){}
-	void SetWarningValue(double num)
+	void setWarningValue(double num)
 	{
-		values.warning = num;
+		_values._warning = num;
 	}
-	void SetCriticalValue(double num)
+	void setCriticalValue(double num)
 	{
-		values.critical = num;
+		_values._critical = num;
 	}
-	double getwarning()
+	double getWarning()
 	{
-		return values.warning;
+		return _values._warning;
 	}
-	double getcritical()
+	double getCritical()
 	{
-		return values.critical;
+		return _values._critical;
 	}
-	dht_STATE getstate()
+	MointorState getState()
 	{
-		return state;
+		return _state;
 	}
-	void setstate(dht_STATE State)
+	void setState(MointorState State)
 	{
-		state = State;
+		_state = State;
 	}
-	thresholds * getthresholds()
+	thresHolds * getThresHolds()
 	{
-		return  &values;
+		return  &_values;
 	}
 };
 

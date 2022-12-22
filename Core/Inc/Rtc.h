@@ -1,11 +1,8 @@
 #ifndef INC_RTC_H_
 #define INC_RTC_H_
-
 #include "main.h"
 
-
-
-typedef struct DateTime
+struct DateTime
 {
 	int sec;
 	int min;
@@ -14,20 +11,16 @@ typedef struct DateTime
 	int day;
 	int month;
 	int year;
-} DateTime;
+};
 
-class _RTC{
+class Rtc{
 private :
 	I2C_HandleTypeDef * _hi2c;
 	uint8_t _devAddr;
-	DateTime dateTime;
+	DateTime _dateTime;
 public:
 
-	 _RTC(I2C_HandleTypeDef * hi2c, uint32_t devAddr);
-
-	//void rtcWrite(Rtc * rtc, uint16_t memAddr, uint8_t * buffer, uint16_t size);
-
-	//void rtcRead(Rtc * rtc, uint16_t memAddr, uint8_t * buffer, uint16_t size);
+	 Rtc(I2C_HandleTypeDef * hi2c, uint32_t devAddr);
 
 	void rtcStart();
 
@@ -38,8 +31,6 @@ public:
 	void rtcGetTime();
 
 	DateTime * rtcTimeToString();
-
-	//uint32_t rtcGetSeconds();
 
 	void rtcSetTime(DateTime * _datetime);
 };

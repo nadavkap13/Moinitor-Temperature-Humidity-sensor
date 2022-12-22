@@ -2,15 +2,15 @@
 #define INC_BUTTON_H_
 #include "main.h"
 #include <stdint.h>
-class BUTTON {
+class Button {
 private:
-	GPIO_TypeDef* GPIOx;
-	uint16_t GPIO_Pin;
+	GPIO_TypeDef* _GPIOx;
+	uint16_t _GPIO_Pin;
 public:
-	BUTTON(GPIO_TypeDef* GPIOx,
+	Button(GPIO_TypeDef* GPIOx,
 	uint16_t GPIO_Pin);
 
-	int Change_State();
+	int changeState();
 };
 
 #endif /* INC_BUTTON_H_ */

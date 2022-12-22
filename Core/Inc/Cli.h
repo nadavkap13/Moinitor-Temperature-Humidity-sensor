@@ -11,20 +11,19 @@ public:
 	virtual ~Cli(){}
 };
 
-class clicommand_entry {
-public:
+struct CliCommandEntry {
 	const char * CommandName;
 	Cli* command;
 };
 
 class CliContainer{
 private:
-	clicommand_entry commands[20];
+	CliCommandEntry commands[20];
 	int funcounter = 0;
 public:
 	CliContainer(){}
 	~CliContainer(){}
-	void RegisterCommand(const  char* CommandName, Cli * clicommand) {
+	void registerCommand(const  char* CommandName, Cli * clicommand) {
 		commands[funcounter].CommandName = CommandName;
 		commands[funcounter].command = clicommand;
 		funcounter++;
@@ -40,7 +39,7 @@ public:
 		}
 		printf("Invalid command\r\n");
 	}
-	void initCLIcontainer();
+	void initCliContainer();
 };
 
 

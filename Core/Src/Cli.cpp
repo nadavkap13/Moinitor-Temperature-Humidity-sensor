@@ -11,67 +11,67 @@
 #include "SD_FILE.h"
 #include "myFlash.h"
 
-extern LED ledblue;
+extern Led ledblue;
 extern int blinkOn;
-extern _RTC rtc;
+extern Rtc rtc;
 extern CliContainer container;
-extern BUZZER buzzer;
-extern _FILE event_file;
-extern _FILE temperature_file;
-extern _Flash flash;
+extern Buzzer buzzer;
+extern File event_file;
+extern File temperature_file;
+extern Flash flash;
 extern Monitor monitor;
 
-class ledOn : public Cli{
+class LedOn : public Cli{
 private:
-	LED * _led;
+	Led * _led;
 public:
-	ledOn(LED * led){
+	LedOn(Led * led){
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		_led->Led_On();
+		_led->ledOn();
 	}
 };
-class ledOff : public Cli{
+class LedOff : public Cli{
 private:
-	LED * _led;
+	Led * _led;
 public:
-	ledOff(LED * led){
+	LedOff(Led * led){
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		_led->Led_Off();
+		_led->ledOff();
 	}
 };
-class ledBlink : public Cli{
+class LedBlink : public Cli{
 private:
-	LED * _led;
+	Led * _led;
 public:
-	ledBlink(LED * led){
+	LedBlink(Led * led){
 		_led = led;
 	}
 	void doCommand(const char * param) override{
-		_led->Led_Blink();
+		_led->ledBlink();
 	}
 };
-class ledSetDelay : public Cli{
+class LedSetDelay : public Cli{
 private:
-	LED * _led;
+	Led * _led;
 public:
-	ledSetDelay(LED * led){
+	LedSetDelay(Led * led){
 		_led = led;
 	}
 	void doCommand(const char * param) override{
 		int _param = atoi(param);
-		_led->LED_delay(_param);
+		_led->ledDelay(_param);
 	}
 };
 
-class rtcstart : public Cli{
+class RtcStart : public Cli{
 private:
-	_RTC * _rtc;
+	Rtc * _rtc;
 public:
-	rtcstart(_RTC * rtc){
+	RtcStart(Rtc * rtc){
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
@@ -79,11 +79,11 @@ public:
 		_rtc->rtcStart();
 	}
 };
-class rtcgettime : public Cli{
+class RtcGetTime : public Cli{
 private:
-	_RTC * _rtc;
+	Rtc * _rtc;
 public:
-	rtcgettime(_RTC * rtc){
+	RtcGetTime(Rtc * rtc){
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
@@ -92,11 +92,11 @@ public:
 
 	}
 };
-class rtcsettime : public Cli{
+class RtcSetTime : public Cli{
 private:
-	_RTC * _rtc;
+	Rtc * _rtc;
 public:
-	rtcsettime(_RTC * rtc){
+	RtcSetTime(Rtc * rtc){
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
@@ -129,17 +129,14 @@ public:
 		tempdate.year = atoi(token);
 		token = strtok(NULL, s);
 
-
-
-
 		_rtc->rtcSetTime(&tempdate);
 	}
 };
-class rtcstop : public Cli{
+class RtcStop : public Cli{
 private:
-	_RTC * _rtc;
+	Rtc * _rtc;
 public:
-	rtcstop(_RTC * rtc){
+	RtcStop(Rtc * rtc){
 		_rtc = rtc;
 	}
 	void doCommand(const char * param) override{
@@ -147,92 +144,92 @@ public:
 		_rtc->rtcStop();
 	}
 };
-class buzzeron : public Cli{
+class BuzzerOn : public Cli{
 private:
-	BUZZER * _buzzer;
+	Buzzer * _buzzer;
 public:
-	buzzeron(BUZZER * buzzer){
+	BuzzerOn(Buzzer * buzzer){
 		_buzzer = buzzer;
 	}
 	void doCommand(const char * param) override{
 		_buzzer->buzzerStartPlay();
 	}
 };
-class buzzeroff : public Cli{
+class BuzzerOff : public Cli{
 private:
-	BUZZER * _buzzer;
+	Buzzer * _buzzer;
 public:
-	buzzeroff(BUZZER * buzzer){
+	BuzzerOff(Buzzer * buzzer){
 		_buzzer = buzzer;
 	}
 	void doCommand(const char * param) override{
 		_buzzer->buzzerStopPlay();
 	}
 };
-class setwarning : public Cli{
+class SetWarning : public Cli{
 private:
 	Monitor * _monitor;
 public:
-	setwarning(Monitor * monitor){
+	SetWarning(Monitor * monitor){
 		_monitor = monitor;
 	}
 	void doCommand(const char * param) override{
 		int _param = atoi(param);
-		_monitor->SetWarningValue(_param);
+		_monitor->setWarningValue(_param);
 		flash.erase();
-		flash.program(_monitor->getthresholds());
+		flash.program(_monitor->getThresHolds());
 	}
 };
-class setcritical : public Cli{
+class SetCritical : public Cli{
 private:
 	Monitor * _monitor;
 public:
-	setcritical(Monitor * monitor){
+	SetCritical(Monitor * monitor){
 		_monitor = monitor;
 	}
 	void doCommand(const char * param) override{
 		int _param = atoi(param);
-		_monitor->SetCriticalValue(_param);
+		_monitor->setCriticalValue(_param);
 		flash.erase();
-		flash.program(_monitor->getthresholds());
+		flash.program(_monitor->getThresHolds());
 	}
 };
-class print_file : public Cli{
+class PrintFile : public Cli{
 private:
-	_FILE * _file;
+	File * _file;
 public:
-	print_file(_FILE * file){
+	PrintFile(File * file){
 		_file = file;
 	}
 	void doCommand(const char * param) override{
 		_file->read();
 	}
 };
-class delete_file : public Cli{
+class DeleteFile : public Cli{
 private:
-	_FILE * _file;
+	File * _file;
 public:
-	delete_file(_FILE * file){
+	DeleteFile(File * file){
 		_file = file;
 	}
 	void doCommand(const char * param) override{
-		_file->FILE_delete();
+		_file->deleteFile();
 	}
 };
 
-void CliContainer::initCLIcontainer(){
-	container.RegisterCommand("ledon",new ledOn(&ledblue));
-	container.RegisterCommand("ledoff",new ledOff(&ledblue));
-	container.RegisterCommand("settime",new rtcsettime(&rtc));
-	container.RegisterCommand("gettime",new rtcgettime(&rtc));
-	container.RegisterCommand("play",new buzzeron(&buzzer));
-	container.RegisterCommand("stop",new buzzeroff(&buzzer));
-	container.RegisterCommand("printtemp",new print_file(&temperature_file));
-	container.RegisterCommand("printlog",new print_file(&event_file));
-	container.RegisterCommand("deletetemp",new delete_file(&temperature_file));
-	container.RegisterCommand("deletelog",new delete_file(&event_file));
-	container.RegisterCommand("setwarrning",new setwarning(&monitor));
-	container.RegisterCommand("setcritical",new setcritical(&monitor));
+void CliContainer::initCliContainer(){
+	container.registerCommand("ledon",new LedOn(&ledblue));
+	container.registerCommand("ledoff",new LedOff(&ledblue));
+	container.registerCommand("settime",new RtcSetTime(&rtc));
+	container.registerCommand("gettime",new RtcGetTime(&rtc));
+	container.registerCommand("play",new BuzzerOn(&buzzer));
+	container.registerCommand("stop",new BuzzerOff(&buzzer));
+	container.registerCommand("printtemp",new PrintFile(&temperature_file));
+	container.registerCommand("printlog",new PrintFile(&event_file));
+	container.registerCommand("deletetemp",new DeleteFile(&temperature_file));
+	container.registerCommand("deletelog",new DeleteFile(&event_file));
+	container.registerCommand("setwarrning",new SetWarning(&monitor));
+	container.registerCommand("setcritical",new SetCritical(&monitor));
 
 }
 

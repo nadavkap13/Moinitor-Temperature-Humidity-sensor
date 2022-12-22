@@ -3,17 +3,17 @@
 #include "main.h"
 
 
-class BUZZER{
+class Buzzer{
 private:
-	TIM_HandleTypeDef *htim;
+	TIM_HandleTypeDef * _htim;
 public:
-	BUZZER(TIM_HandleTypeDef *htim);
+	Buzzer(TIM_HandleTypeDef * htim);
 	void buzzerStartPlay();
 	void buzzerStopPlay();
 	//void buzzerOnInterrupt();
 };
 
-typedef enum  _NOTES{
+enum NOTES{
    NOTE_1 = 381,
    NOTE_2 = 340,
    NOTE_3 = 322,
@@ -22,12 +22,12 @@ typedef enum  _NOTES{
    NOTE_6 = 227,
    NOTE_7 = 202,
 
-}NOTES;
-typedef enum _FRAME{
+};
+enum FRAME{
 	FRAME_0 = 1000,
 	FRAME_1 = 500,
 	FRAME_2 = 255
-}FRAME;
+};
 
 
 

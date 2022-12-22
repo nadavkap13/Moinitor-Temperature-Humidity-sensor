@@ -4,10 +4,13 @@
 #include "string.h"
 #include "stdio.h"
 
-
-
-int commTask();
-void handleCommand();
+class ComTask
+{
+public:
+	ComTask(){}
+	int commTask();
+	void handleCommand();
+};
 
 //void RegisterCallbacks(HandlerFunc onFunc, HandlerFunc offFunc,void* object);
 

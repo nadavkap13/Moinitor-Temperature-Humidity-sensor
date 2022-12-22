@@ -7,9 +7,9 @@
 ../Core/Src/main.c:466:13:MX_TIM6_Init	24	static
 ../Core/Src/main.c:504:13:MX_USART2_UART_Init	8	static
 ../Core/Src/main.c:539:13:MX_GPIO_Init	48	static
-../Core/Src/main.c:607:13:READ_TEMP_func	16	static
-../Core/Src/main.c:627:13:comtask_func	16	static
-../Core/Src/main.c:645:13:monitor_func	16	static
-../Core/Src/main.c:663:13:blink_func	16	static
-../Core/Src/main.c:682:6:HAL_TIM_PeriodElapsedCallback	16	static
-../Core/Src/main.c:700:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:607:13:readTempFunc	16	static
+../Core/Src/main.c:626:13:comtaskFunc	16	static
+../Core/Src/main.c:644:13:monitorFunc	16	static
+../Core/Src/main.c:662:13:blinkFunc	16	static
+../Core/Src/main.c:681:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:699:6:Error_Handler	4	static,ignoring_inline_asm

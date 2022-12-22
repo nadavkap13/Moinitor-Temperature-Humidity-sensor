@@ -3,56 +3,38 @@
 #include "main.h"
 #include "LED.h"
 
-LED::LED(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin):
-		GPIOx(GPIOx),GPIO_Pin(GPIO_Pin)
+Led::Led(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin):
+		_GPIOx(GPIOx),_GPIO_Pin(GPIO_Pin)
 {
 }
 
-void LED::Led_On()
+void Led::ledOn()
 {
-	STATE = LED_STATE_ON;
-	HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_SET);
+	_STATE = LED_STATE_ON;
+	HAL_GPIO_WritePin(_GPIOx, _GPIO_Pin, GPIO_PIN_SET);
 
 }
-void LED::Led_Off()
+void Led::ledOff()
 {
-	STATE = LED_STATE_OFF;
-	HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_RESET);
+	_STATE = LED_STATE_OFF;
+	HAL_GPIO_WritePin(_GPIOx, _GPIO_Pin, GPIO_PIN_RESET);
 
 }
-void LED::LED_delay(int num){
-	delay = num;
+void Led::ledDelay(int num){
+	_delay = num;
 }
-void LED::Led_Blink()
+void Led::ledBlink()
 {
-	HAL_GPIO_TogglePin(GPIOx, GPIO_Pin);
-	osDelay(delay);
+	HAL_GPIO_TogglePin(_GPIOx, _GPIO_Pin);
+	osDelay(_delay);
 
 }
-void LED::Is_blink()
+void Led::isBlink()
 {
-	STATE = LED_STATE_BLINK;
+	_STATE = LED_STATE_BLINK;
 }
-LED_STATE LED:: getState()
+LedState Led::getState()
 {
-	return STATE;
+	return _STATE;
 }
 
-//void LED::LEDchangeState()
-//{
-//	switch (STATE){
-//	case LED_STATE_OFF:
-//		STATE = LED_STATE_ON;
-//		Led_On();
-//		break;
-//	case LED_STATE_ON:
-//		STATE = LED_STATE_BLINK;
-//		blink = 1;
-//			break;
-//	case LED_STATE_BLINK:
-//		STATE = LED_STATE_OFF;
-//		blink = 0;
-//		Led_Off();
-//			break;
-//	}
-//}

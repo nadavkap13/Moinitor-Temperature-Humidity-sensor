@@ -14,7 +14,7 @@ int cmdprint = 0;
 extern CliContainer container;
 
 
-int commTask() {
+int ComTask::commTask() {
 	uint8_t ch;
 
 	HAL_StatusTypeDef Status = HAL_UART_Receive(&huart2, &ch, 1, 10);
@@ -56,7 +56,7 @@ int commTask() {
 	return 1;
 }
 
-void handleCommand() {
+void ComTask::handleCommand() {
 	char cmd[20];
 	char param[50];
 	sscanf((const char*) cmdbuffer, "%s %s", cmd, param);

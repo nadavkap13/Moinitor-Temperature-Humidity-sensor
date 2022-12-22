@@ -13,19 +13,20 @@
 #include "SD_FILE.h"
 #include "myFlash.h"
 
-DHT dht = DHT(GPIOB,pin_4_Pin);
-_RTC rtc = _RTC(&hi2c1,0xD0);
+Dht dht = Dht(GPIOB,pin_4_Pin);
+Rtc rtc = Rtc(&hi2c1,0xD0);
 CliContainer container = CliContainer();
-LED ledblue = LED(LD2_GPIO_Port, LD2_Pin);
-BUZZER buzzer = BUZZER(&htim3);
+Led ledblue = Led(LD2_GPIO_Port, LD2_Pin);
+Buzzer buzzer = Buzzer(&htim3);
 Monitor monitor = Monitor();
 FATFS FatFs; 	//Fatfs handle
 FIL event_fil;//File handle
 FIL temp_fil;//File handle
 FRESULT fres; //Result after operations
-_FILE event_file = _FILE(event_fil, FatFs, fres,"event.txt");
-_FILE temperature_file = _FILE(temp_fil, FatFs, fres,"temp.txt");
-_Flash flash = _Flash();
+File event_file = File(event_fil, FatFs, fres,"event.txt");
+File temperature_file = File(temp_fil, FatFs, fres,"temp.txt");
+Flash flash = Flash();
+ComTask comtask = ComTask();
 int buzz_off = 0;
 int write_count = 0;
 
@@ -43,23 +44,6 @@ void mySDInit(){
 		printf("f_mount error (%i)\r\n", _fres);
 		while(1);
 		}
-
-		//Let's get some statistics from the SD card
-//		DWORD free_clusters, free_sectors, total_sectors;
-//
-//		FATFS* getFreeFs;
-//
-//		_fres = f_getfree("", &free_clusters, &getFreeFs);
-//		if (_fres != FR_OK) {
-//		printf("f_getfree error (%i)\r\n", _fres);
-//		while(1);
-//		}
-//
-//		//Formula comes from ChaN's documentation
-//		total_sectors = (getFreeFs->n_fatent - 2) * getFreeFs->csize;
-//		free_sectors = free_clusters * getFreeFs->csize;
-
-		//printf("SD card stats:\r\n%10lu KiB total drive space.\r\n%10lu KiB available.\r\n", total_sectors / 2, free_sectors / 2);
 		printf("mount is good\r\n");
 	}
 
@@ -69,24 +53,21 @@ int _write(int fd, char *ptr, int len) {
 }
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	dht.Dht_onGpioInterrupt(pin_4_Pin);
+	dht.dhtOnGpioInterrupt(pin_4_Pin);
 	if(HAL_GPIO_ReadPin(button_GPIO_Port, button_Pin) == 0){
-		monitor.setstate(CRITICAL_STATE_NO_BUZZER);
+		monitor.setState(CRITICAL_STATE_NO_BUZZER);
 		buzzer.buzzerStopPlay();
 	}
 
 }
-void mycallback(){
 
-}
-
-void mymaininit()
+void myMainInit()
 {
 	HAL_NVIC_EnableIRQ(TIM6_IRQn);
 	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_TIM_Base_Start(&htim3);
 	HAL_TIM_Base_Start_IT(&htim1);
-	container.initCLIcontainer();
+	container.initCliContainer();
 	mySDInit();
 
 }
@@ -96,10 +77,10 @@ void myloop()
 
 }
 
-void monitor_func(void *argument)
+void monitorFunc(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	 dht_STATE currentState;
+	 MointorState currentState;
 	  /* Infinite loop */
   for(;;)
   {
@@ -108,34 +89,34 @@ void monitor_func(void *argument)
   char temperature_data[200];
   DateTime * currtime = rtc.rtcTimeToString();
 
-	  if(dht.Dht_hasData()){
-		 if(monitor.getstate() == CRITICAL_STATE_NO_BUZZER && dht.get_temperature()>= monitor.getcritical() && currentState != CRITICAL_STATE_NO_BUZZER ){
-			 ledblue.Is_blink();
+	  if(dht.dhtHasData()){
+		 if(monitor.getState() == CRITICAL_STATE_NO_BUZZER && dht.getTemperature()>= monitor.getCritical() && currentState != CRITICAL_STATE_NO_BUZZER ){
+			 ledblue.isBlink();
 			 		 }
-		 else if(dht.get_temperature()>= monitor.getcritical() && currentState != CRITICAL_STATE && currentState != CRITICAL_STATE_NO_BUZZER){
-			 monitor.setstate(CRITICAL_STATE);
-			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is CRICTICAL- %f the current temp is %f, the temp is %f above the threshold\r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,monitor.getcritical(),dht.get_temperature(),(dht.get_temperature() - monitor.getcritical()) );
+		 else if(dht.getTemperature()>= monitor.getCritical() && currentState != CRITICAL_STATE && currentState != CRITICAL_STATE_NO_BUZZER){
+			 monitor.setState(CRITICAL_STATE);
+			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is CRICTICAL- %f the current temp is %f, the temp is %f above the threshold\r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,monitor.getCritical(),dht.getTemperature(),(dht.getTemperature() - monitor.getCritical()) );
 			 event_file.write(data);
-			 ledblue.Is_blink();
+			 ledblue.isBlink();
 			 buzzer.buzzerStartPlay();
 
 		 }
-		 else if(dht.get_temperature()>= monitor.getwarning() && dht.get_temperature()< monitor.getcritical() && currentState != WARRNING_STATE){
-			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is WARNING- %f the current temp is %f, the temp is %f above the threshold\r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,monitor.getwarning(),dht.get_temperature(),(dht.get_temperature() - monitor.getwarning()) );
+		 else if(dht.getTemperature()>= monitor.getWarning() && dht.getTemperature()< monitor.getCritical() && currentState != WARRNING_STATE){
+			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is WARNING- %f the current temp is %f, the temp is %f above the threshold\r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,monitor.getWarning(),dht.getTemperature(),(dht.getTemperature() - monitor.getWarning()) );
 			 event_file.write(data);
-			 monitor.setstate(WARRNING_STATE);
-			 ledblue.Led_On();
+			 monitor.setState(WARRNING_STATE);
+			 ledblue.ledOn();
 		 }
-		 else if (dht.get_temperature()< monitor.getwarning() && currentState != NORMAL_STATE){
-			 monitor.setstate(NORMAL_STATE);
-			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is NORMAL current temp is %f \r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,dht.get_temperature());
+		 else if (dht.getTemperature()< monitor.getWarning() && currentState != NORMAL_STATE){
+			 monitor.setState(NORMAL_STATE);
+			 sprintf(data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d the log severity is NORMAL current temp is %f \r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,dht.getTemperature());
 			 event_file.write(data);
 		 }
-		 currentState = monitor.getstate();
+		 currentState = monitor.getState();
 	   }
 
 	  if(write_count == 59){
-			 sprintf(temperature_data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d current temp is %f \r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,dht.get_temperature());
+			 sprintf(temperature_data,"date is %02d:%02d:%02d  %02d %02d/%02d/%02d current temp is %f \r\n",currtime->hours,currtime->min,currtime->sec,currtime->weekDay,currtime->day,currtime->month,currtime->year,dht.getTemperature());
 			 temperature_file.write(temperature_data);
 			 write_count = 0;
 
@@ -145,43 +126,45 @@ void monitor_func(void *argument)
   /* USER CODE END 5 */
 }
 
-void comtask_func(void *argument)
+void comtaskFunc(void *argument)
 {
 	/* USER CODE BEGIN comtask_func */
 
 	/* Infinite loop */
 	for (;;) {
 
-		if (commTask()) {
-			handleCommand();
+		if (comtask.commTask()) {
+			comtask.handleCommand();
 		}
 	}
 	/* USER CODE END comtask_func */
 }
-void READ_TEMP_func(void *argument)
+void readTempFunc(void *argument)
 {
  /* USER CODE BEGIN monitor_func */
+	int ticks = 0;
  /* Infinite loop */
  for(;;)
  {
-
-	 dht.Dht_readAsync();
+	 ticks = xTaskGetTickCount();
+	 ticks += 1000;
+	 dht.dhtReadAsync();
 	 write_count++;
-	 osDelay(1000);
+	 osDelayUntil(ticks);
 	 osSemaphoreRelease(DHT_MONITORHandle);
 
  }
 
  /* USER CODE END monitor_func */
 }
-void blink_func(void *argument)
+void blinkFunc(void *argument)
 {
  /* USER CODE BEGIN blink_func */
  /* Infinite loop */
  for(;;)
  {
 	 if(ledblue.getState() == LED_STATE_BLINK){
-		 ledblue.Led_Blink();
+		 ledblue.ledBlink();
 	 }
 	 else {
 		 osThreadYield();

@@ -1,6 +1,6 @@
-../Core/Src/myFlash.cpp:14:11:static _Flash* _Flash::Instance()	16	static
+../Core/Src/myFlash.cpp:14:9:static Flash* Flash::Instance()	16	static
 ../Core/Src/myFlash.cpp:21:13:void pageSelect(FLASH_EraseInitTypeDef*)	16	static
-../Core/Src/myFlash.cpp:28:1:_Flash::_Flash()	16	static
+../Core/Src/myFlash.cpp:28:1:Flash::Flash()	16	static
 ../Core/Src/myFlash.cpp:32:6:void pageErase()	32	static
-../Core/Src/myFlash.cpp:43:6:void _Flash::erase()	16	static
-../Core/Src/myFlash.cpp:52:6:void _Flash::program(void*)	32	static
+../Core/Src/myFlash.cpp:43:6:void Flash::erase()	16	static
+../Core/Src/myFlash.cpp:52:6:void Flash::program(void*)	32	static

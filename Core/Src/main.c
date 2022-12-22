@@ -151,7 +151,7 @@ int main(void)
   MX_SPI1_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-  mymaininit();
+  myMainInit();
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -179,16 +179,16 @@ int main(void)
 
   /* Create the thread(s) */
   /* creation of READ_TEMP */
-  READ_TEMPHandle = osThreadNew(READ_TEMP_func, NULL, &READ_TEMP_attributes);
+  READ_TEMPHandle = osThreadNew(readTempFunc, NULL, &READ_TEMP_attributes);
 
   /* creation of COMTASK */
-  COMTASKHandle = osThreadNew(comtask_func, NULL, &COMTASK_attributes);
+  COMTASKHandle = osThreadNew(comtaskFunc, NULL, &COMTASK_attributes);
 
   /* creation of MONITOR_TEMP */
-  MONITOR_TEMPHandle = osThreadNew(monitor_func, NULL, &MONITOR_TEMP_attributes);
+  MONITOR_TEMPHandle = osThreadNew(monitorFunc, NULL, &MONITOR_TEMP_attributes);
 
   /* creation of BLINK_TASK */
-  BLINK_TASKHandle = osThreadNew(blink_func, NULL, &BLINK_TASK_attributes);
+  BLINK_TASKHandle = osThreadNew(blinkFunc, NULL, &BLINK_TASK_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -604,10 +604,9 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_READ_TEMP_func */
-__weak void READ_TEMP_func(void *argument)
+__weak void readTempFunc(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	  mymaininit();
 
   /* Infinite loop */
   for(;;)
@@ -624,7 +623,7 @@ __weak void READ_TEMP_func(void *argument)
 * @retval None
 */
 /* USER CODE END Header_comtask_func */
-__weak void comtask_func(void *argument)
+__weak void comtaskFunc(void *argument)
 {
   /* USER CODE BEGIN comtask_func */
   /* Infinite loop */
@@ -642,7 +641,7 @@ __weak void comtask_func(void *argument)
 * @retval None
 */
 /* USER CODE END Header_monitor_func */
-__weak void monitor_func(void *argument)
+__weak void monitorFunc(void *argument)
 {
   /* USER CODE BEGIN monitor_func */
   /* Infinite loop */
@@ -660,7 +659,7 @@ __weak void monitor_func(void *argument)
 * @retval None
 */
 /* USER CODE END Header_blink_func */
-__weak void blink_func(void *argument)
+__weak void blinkFunc(void *argument)
 {
   /* USER CODE BEGIN blink_func */
   /* Infinite loop */
@@ -688,7 +687,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-  mycallback();
+
 
   /* USER CODE END Callback 1 */
 }
